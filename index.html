@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry Token 用量仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9;
+    --dim: #8b949e; --accent: #58a6ff; --green: #3fb950; --orange: #d2991d;
+    --red: #f85149; --purple: #a371f7;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    padding: 24px; max-width: 1300px; margin: 0 auto;
+  }
+  h1 { font-size:1.5rem; margin-bottom:4px; }
+  .subtitle { color:var(--dim); font-size:0.85rem; margin-bottom:24px; }
+  .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:24px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:16px; }
+  .card .label { color:var(--dim); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px; }
+  .card .value { font-size:1.7rem; font-weight:700; font-variant-numeric:tabular-nums; }
+  .card .sub { color:var(--dim); font-size:0.76rem; margin-top:4px; }
+  .accent { color:var(--accent); } .green { color:var(--green); } .orange { color:var(--orange); } .purple { color:var(--purple); }
+  .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-bottom:24px; }
+  @media (max-width:768px) { .grid-2 { grid-template-columns:1fr; } }
+  .panel { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px; margin-bottom:24px; }
+  .panel h3 { font-size:0.88rem; margin-bottom:16px; color:var(--dim); text-transform:uppercase; letter-spacing:0.05em; }
+  canvas { max-height:280px; }
+  table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  th { text-align:left; color:var(--dim); font-weight:500; padding:8px 10px; border-bottom:1px solid var(--border); font-size:0.72rem; text-transform:uppercase; }
+  td { padding:7px 10px; border-bottom:1px solid var(--border); font-variant-numeric:tabular-nums; }
+  tr:hover td { background:rgba(255,255,255,0.02); }
+  .bar-cell { position:relative; }
+  .bar-cell .bar { position:absolute; left:0; top:2px; bottom:2px; background:var(--accent); opacity:0.12; border-radius:2px; }
+  .badge { display:inline-block; padding:2px 7px; border-radius:4px; font-size:0.7rem; font-weight:600; }
+  .badge-go { background:rgba(88,166,255,0.15); color:var(--accent); }
+  .badge-ds { background:rgba(63,185,80,0.15); color:var(--green); }
+  .badge-custom { background:rgba(163,113,247,0.15); color:var(--purple); }
+  .badge-baidu { background:rgba(210,153,29,0.15); color:var(--orange); }
+  .badge-ali { background:rgba(248,81,73,0.15); color:var(--red); }
+  .usage-bar { height:8px; background:var(--border); border-radius:4px; overflow:hidden; margin-top:4px; }
+  .usage-fill { height:100%; border-radius:4px; transition:width 0.3s; }
+  .provider-cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:24px; }
+  .pcard { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px; }
+  .pcard .pname { font-weight:600; margin-bottom:8px; }
+  .pcard .prow { display:flex; justify-content:space-between; padding:3px 0; font-size:0.82rem; }
+  .pcard .prow .pl { color:var(--dim); }
+  .footer { text-align:center; color:var(--dim); font-size:0.7rem; margin-top:32px; padding-top:16px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<h1>🤖 Henry Token 用量仪表盘</h1>
+<p class="subtitle">数据来源: ~/.hermes/state.db &nbsp;|&nbsp; 更新: 2026-05-03 23:55:29 &nbsp;|&nbsp; 自动每日刷新</p>
+
+<!-- Summary Cards -->
+<div class="cards">
+  <div class="card">
+    <div class="label">总会话</div>
+    <div class="value">17</div>
+    <div class="sub">04/28 → 05/03</div>
+  </div>
+  <div class="card">
+    <div class="label">API 调用次数</div>
+    <div class="value accent">1001</div>
+    <div class="sub">58 次/会话</div>
+  </div>
+  <div class="card">
+    <div class="label">计费 Token</div>
+    <div class="value green">2.7M</div>
+    <div class="sub">输入 2.2M + 输出 468K</div>
+  </div>
+  <div class="card">
+    <div class="label">缓存命中率</div>
+    <div class="value purple">97.7%</div>
+    <div class="sub">节省 91.8M token</div>
+  </div>
+  <div class="card">
+    <div class="label">Go 套餐用量</div>
+    <div class="value orange">$1.64</div>
+    <div class="sub">月限额 $60 / 2.7%</div>
+    <div class="usage-bar"><div class="usage-fill" style="width:2.7360425%;background:var(--orange)"></div></div>
+  </div>
+</div>
+
+<!-- Custom Provider Cards: Baidu, Alibaba, Go -->
+<div class="provider-cards">
+  <div class="pcard">
+    <div class="pname"><span class="badge badge-go">Go</span> OpenCode Go 套餐</div>
+    <div class="prow"><span class="pl">会话</span><span>6</span></div>
+    <div class="prow"><span class="pl">API 调用</span><span class="accent">249</span></div>
+    <div class="prow"><span class="pl">输入 Token</span><span>605K</span></div>
+    <div class="prow"><span class="pl">输出 Token</span><span>122K</span></div>
+    <div class="prow"><span class="pl">总计</span><span style="font-weight:600">727K</span></div>
+    <div class="prow"><span class="pl">缓存命中</span><span style="color:var(--purple)">18.4M</span></div>
+    <div class="prow"><span class="pl">预估费用</span><span class="orange">$1.64 / $60</span></div>
+    <div class="usage-bar"><div class="usage-fill" style="width:2.7360425%;background:var(--orange)"></div></div>
+  </div>
+  <div class="pcard">
+    <div class="pname"><span class="badge badge-ali">阿里</span> 阿里百炼 Coding Plan</div>
+    <div class="prow"><span class="pl">会话</span><span>2</span></div>
+    <div class="prow"><span class="pl">API 调用</span><span class="accent">7</span></div>
+    <div class="prow"><span class="pl">输入 Token</span><span>14K</span></div>
+    <div class="prow"><span class="pl">输出 Token</span><span>530</span></div>
+    <div class="prow"><span class="pl">总计</span><span style="font-weight:600">14K</span></div>
+    <div class="prow"><span class="pl">缓存命中</span><span style="color:var(--purple)">256</span></div>
+    <div class="prow"><span class="pl">状态</span><span style="color:var(--dim)">🟢 活跃</span></div>
+  </div>
+  <div class="pcard">
+    <div class="pname"><span class="badge badge-baidu">百度</span> 百度千帆 Coding Plan</div>
+    <div class="prow"><span class="pl">会话</span><span>0</span></div>
+    <div class="prow"><span class="pl">API 调用</span><span class="accent">0</span></div>
+    <div class="prow"><span class="pl">输入 Token</span><span>0</span></div>
+    <div class="prow"><span class="pl">输出 Token</span><span>0</span></div>
+    <div class="prow"><span class="pl">总计</span><span style="font-weight:600">0</span></div>
+    <div class="prow"><span class="pl">缓存命中</span><span style="color:var(--purple)">0</span></div>
+    <div class="prow"><span class="pl">状态</span><span style="color:var(--dim)">⚪ 暂无调用</span></div>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="grid-2">
+  <div class="panel">
+    <h3>📊 按供应商/模型分拆</h3>
+    <canvas id="providerChart"></canvas>
+  </div>
+  <div class="panel">
+    <h3>📈 每日 Token 消耗趋势</h3>
+    <canvas id="dailyChart"></canvas>
+  </div>
+</div>
+
+<!-- Session Table -->
+<div class="panel">
+  <h3>📋 会话明细（最近 20 条）</h3>
+  <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>时间</th><th>模型 / 供应商</th><th>API 调用</th>
+        <th>输入</th><th>输出</th><th>总计</th>
+        <th>缓存命中</th><th>标题</th>
+      </tr></thead>
+      <tbody id="sessionBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">Henry Token Dashboard &nbsp;|&nbsp; 生成于 2026-05-03 23:55:29 &nbsp;|&nbsp; 每日自动刷新</div>
+
+<script>
+const AGG_DATA = [{"label": "deepseek-v4-pro [deepseek]", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "sessions": 7, "calls": 714, "input": 1503988, "output": 337105, "reasoning": 0, "cache_read": 71891584, "cache_write": 0, "total": 1841093}, {"label": "deepseek-v4-pro [opencode-go]", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "sessions": 6, "calls": 249, "input": 604645, "output": 122443, "reasoning": 0, "cache_read": 18427392, "cache_write": 0, "total": 727088}, {"label": "deepseek-v4-pro [deepseek]", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com/v1", "sessions": 1, "calls": 31, "input": 61151, "output": 7906, "reasoning": 0, "cache_read": 1467904, "cache_write": 0, "total": 69057}, {"label": "kimi-k2.5 [custom]", "model": "kimi-k2.5", "provider": "custom", "base_url": "https://coding.dashscope.aliyuncs.com/v1", "sessions": 2, "calls": 7, "input": 13531, "output": 530, "reasoning": 0, "cache_read": 256, "cache_write": 0, "total": 14061}, {"label": "deepseek-v4-pro [unknown]", "model": "deepseek-v4-pro", "provider": "unknown", "base_url": "", "sessions": 1, "calls": 0, "input": 0, "output": 0, "reasoning": 0, "cache_read": 0, "cache_write": 0, "total": 0}];
+const SESSIONS = [{"id": "cron_d9ad7f18f70", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "start": 1777823723.2095659, "end": null, "calls": 1, "input": 4877, "output": 125, "reasoning": 0, "total": 5002, "bar_pct": 0.9, "cache_read": 128, "cache_hit_pct": 2.6, "title": ""}, {"id": "20260503_172823_", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "start": 1777800503.345005, "end": null, "calls": 38, "input": 87794, "output": 29414, "reasoning": 0, "total": 117208, "bar_pct": 20.8, "cache_read": 1894400, "cache_hit_pct": 95.6, "title": ""}, {"id": "20260502_173802_", "model": "kimi-k2.5", "provider": "custom", "base_url": "https://coding.dashscope.aliyuncs.com/v1", "start": 1777714682.241896, "end": null, "calls": 4, "input": 7743, "output": 371, "reasoning": 0, "total": 8114, "bar_pct": 1.4, "cache_read": 256, "cache_hit_pct": 3.2, "title": ""}, {"id": "20260502_173419_", "model": "kimi-k2.5", "provider": "custom", "base_url": "https://coding.dashscope.aliyuncs.com/v1", "start": 1777714459.1006012, "end": null, "calls": 3, "input": 5788, "output": 159, "reasoning": 0, "total": 5947, "bar_pct": 1.1, "cache_read": 0, "cache_hit_pct": 0.0, "title": ""}, {"id": "20260502_170517_", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "start": 1777712717.2835479, "end": null, "calls": 5, "input": 2989, "output": 1111, "reasoning": 0, "total": 4100, "bar_pct": 0.7, "cache_read": 11392, "cache_hit_pct": 79.2, "title": ""}, {"id": "20260502_170348_", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "start": 1777712628.9460201, "end": null, "calls": 5, "input": 2909, "output": 1502, "reasoning": 0, "total": 4411, "bar_pct": 0.8, "cache_read": 11392, "cache_hit_pct": 79.7, "title": ""}, {"id": "20260502_160748_", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "start": 1777709268.985971, "end": 1777800503.344161, "calls": 159, "input": 188488, "output": 69136, "reasoning": 0, "total": 257624, "bar_pct": 45.6, "cache_read": 13216128, "cache_hit_pct": 98.6, "title": ""}, {"id": "20260502_153348_", "model": "deepseek-v4-pro", "provider": "opencode-go", "base_url": "https://opencode.ai/zen/go/v1", "start": 1777707228.219214, "end": 1777709268.985467, "calls": 41, "input": 317588, "output": 21155, "reasoning": 0, "total": 338743, "bar_pct": 60.0, "cache_read": 3293952, "cache_hit_pct": 91.2, "title": ""}, {"id": "20260502_112120_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777692080.504426, "end": 1777707228.2184021, "calls": 249, "input": 456229, "output": 108395, "reasoning": 0, "total": 564624, "bar_pct": 100.0, "cache_read": 23836544, "cache_hit_pct": 98.1, "title": "OneDrive China GFW Interference Diagnosis"}, {"id": "20260430_161621_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777536981.233515, "end": 1777692080.5013702, "calls": 96, "input": 78957, "output": 35164, "reasoning": 0, "total": 114121, "bar_pct": 20.2, "cache_read": 5596416, "cache_hit_pct": 98.6, "title": ""}, {"id": "20260430_085513_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777510513.123311, "end": 1777536981.232842, "calls": 98, "input": 333584, "output": 73037, "reasoning": 0, "total": 406621, "bar_pct": 72.0, "cache_read": 19624192, "cache_hit_pct": 98.3, "title": "联网检索能力提升方案"}, {"id": "20260429_100406_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com/v1", "start": 1777428246.1660101, "end": null, "calls": 31, "input": 61151, "output": 7906, "reasoning": 0, "total": 69057, "bar_pct": 12.2, "cache_read": 1467904, "cache_hit_pct": 96.0, "title": ""}, {"id": "20260429_093412_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777426452.985346, "end": 1777510513.120516, "calls": 90, "input": 285618, "output": 49709, "reasoning": 0, "total": 335327, "bar_pct": 59.4, "cache_read": 7324032, "cache_hit_pct": 96.2, "title": "OneDrive On-Demand Files Not Downloading"}, {"id": "20260429_091716_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777425436.3313339, "end": 1777426452.9850051, "calls": 16, "input": 46938, "output": 7331, "reasoning": 0, "total": 54269, "bar_pct": 9.6, "cache_read": 585984, "cache_hit_pct": 92.6, "title": "WeChat Hermes Model Routing"}, {"id": "20260429_063504_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777415704.331025, "end": 1777425436.3300831, "calls": 67, "input": 149853, "output": 26158, "reasoning": 0, "total": 176011, "bar_pct": 31.2, "cache_read": 3533440, "cache_hit_pct": 95.9, "title": ""}, {"id": "20260428_202833_", "model": "deepseek-v4-pro", "provider": "deepseek", "base_url": "https://api.deepseek.com", "start": 1777379313.003367, "end": 1777415704.326924, "calls": 98, "input": 152809, "output": 37311, "reasoning": 0, "total": 190120, "bar_pct": 33.7, "cache_read": 11390976, "cache_hit_pct": 98.7, "title": "Hello from Hermes AI Assistant"}];
+const DAILY = [{"day": "2026-04-28", "input": 152809, "output": 37311, "cache_read": 11390976, "calls": 98, "sessions": 1}, {"day": "2026-04-29", "input": 543560, "output": 91104, "cache_read": 12911360, "calls": 204, "sessions": 4}, {"day": "2026-04-30", "input": 412541, "output": 108201, "cache_read": 25220608, "calls": 194, "sessions": 2}, {"day": "2026-05-02", "input": 981734, "output": 201829, "cache_read": 40369664, "calls": 466, "sessions": 8}, {"day": "2026-05-03", "input": 92671, "output": 29539, "cache_read": 1894528, "calls": 39, "sessions": 2}];
+
+const totalBillable = 2651299;
+
+function fmt(n) {
+  if (n === null || n === undefined) return '0';
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return Math.round(n/1000) + 'K';
+  return String(n);
+}
+
+function fmtTs(ts) {
+  const d = new Date(ts * 1000);
+  return d.toLocaleDateString('zh-CN', {month:'2-digit',day:'2-digit'}) + ' ' +
+         d.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'});
+}
+
+// Provider chart
+const providerColors = ['#3fb950', '#58a6ff', '#a371f7', '#f85149', '#d2991d'];
+new Chart(document.getElementById('providerChart'), {
+  type: 'doughnut',
+  data: {
+    labels: AGG_DATA.map(a => a.label),
+    datasets: [{
+      data: AGG_DATA.map(a => a.total),
+      backgroundColor: providerColors.slice(0, AGG_DATA.length),
+      borderColor: '#0d1117', borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    plugins: {
+      legend: { position:'bottom', labels:{ color:'#8b949e', padding:16, font:{size:11}, usePointStyle:true } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${fmt(ctx.raw)} token (${(ctx.raw/totalBillable*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// Daily chart
+new Chart(document.getElementById('dailyChart'), {
+  type: 'bar',
+  data: {
+    labels: DAILY.map(d => d.day.slice(5)),
+    datasets: [
+      { label:'输入 Token', data:DAILY.map(d=>d.input), backgroundColor:'#58a6ff', borderRadius:3 },
+      { label:'输出 Token', data:DAILY.map(d=>d.output), backgroundColor:'#3fb950', borderRadius:3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    scales: {
+      x: { stacked:true, ticks:{ color:'#8b949e', font:{size:10} }, grid:{ color:'#21262d' } },
+      y: { stacked:true, ticks:{ color:'#8b949e', callback:v=>fmt(v), font:{size:10} }, grid:{ color:'#21262d' } }
+    },
+    plugins: {
+      legend: { position:'bottom', labels:{ color:'#8b949e', padding:16, font:{size:11}, usePointStyle:true } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.raw)} token` } }
+    }
+  }
+});
+
+// Session table
+const tbody = document.getElementById('sessionBody');
+SESSIONS.forEach(s => {
+  const tr = document.createElement('tr');
+  const badge = s.provider === 'opencode-go' ? '<span class="badge badge-go">Go</span>' :
+                s.provider === 'deepseek' ? '<span class="badge badge-ds">DS</span>' :
+                s.base_url.includes('qianfan') ? '<span class="badge badge-baidu">百度</span>' :
+                s.base_url.includes('dashscope') ? '<span class="badge badge-ali">阿里</span>' :
+                '<span class="badge badge-custom">' + s.provider + '</span>';
+  tr.innerHTML = `
+    <td style="white-space:nowrap">${fmtTs(s.start)}</td>
+    <td>${s.model} ${badge}</td>
+    <td>${s.calls}</td>
+    <td>${fmt(s.input)}</td>
+    <td>${fmt(s.output)}</td>
+    <td class="bar-cell">
+      <div class="bar" style="width:${s.bar_pct}%"></div>
+      ${fmt(s.total)}
+    </td>
+    <td style="color:${s.cache_hit_pct > 90 ? 'var(--green)' : s.cache_hit_pct > 50 ? 'var(--orange)' : 'var(--dim)'}">
+      ${fmt(s.cache_read)} (${s.cache_hit_pct}%)
+    </td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--dim)" title="${s.title}">${s.title || '—'}</td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
