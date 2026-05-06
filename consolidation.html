@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry 每日沉淀报告</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --orange: #d2991d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; padding: 20px; max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.5rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+h1 .badge { background: var(--accent); color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.controls { display: flex; align-items: center; gap: 10px; }
+.controls select { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 0.9rem; }
+.controls span { color: var(--muted); font-size: 0.85rem; }
+.updated { color: var(--muted); font-size: 0.8rem; }
+.entry { border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; background: var(--surface); }
+.entry-date { font-weight: 600; color: var(--accent); font-size: 1.05rem; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+.entry-date .icons { font-size: 0.8rem; }
+.entry-content { font-size: 0.9rem; }
+.entry-content h2 { font-size: 1rem; color: var(--green); margin: 12px 0 6px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.entry-content h3 { font-size: 0.9rem; color: var(--orange); margin: 8px 0 4px; }
+.entry-content ul { padding-left: 20px; }
+.entry-content li { margin-bottom: 3px; }
+.entry-content code { background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius: 3px; font-size: 0.85em; }
+.obsidian-link { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.obsidian-link:hover { border-bottom-style: solid; }
+.empty { text-align: center; color: var(--muted); padding: 40px; }
+.footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📋 Henry 每日沉淀报告 <span class="badge">Beta</span></h1>
+    <p class="updated">基于元信息文件夹变动，由 Henry 每日早晨自动生成</p>
+  </div>
+  <div class="controls">
+    <label for="days">📅 显示范围：</label>
+    <select id="days" onchange="render()">
+      <option value="1" selected>过去 1 天</option>
+      <option value="3">过去 3 天</option>
+      <option value="7">过去 7 天</option>
+      <option value="15">过去 15 天</option>
+    </select>
+    <span id="count"></span>
+  </div>
+</div>
+
+<div id="content">
+  <div class="empty">⏳ 加载中...</div>
+</div>
+
+<div class="footer">
+  Henry (Hermes Agent) · Mac mini · <span id="gen-time"></span>
+</div>
+
+<script>
+let data = { entries: [], updated: '' };
+
+fetch('consolidation_data.json?' + Date.now())
+  .then(r => r.json())
+  .then(d => { data = d; render(); })
+  .catch(() => {
+    document.getElementById('content').innerHTML = '<div class="empty">📭 暂无沉淀数据。等待每日 cron 任务首次运行。</div>';
+    document.getElementById('gen-time').textContent = '无数据';
+  });
+
+function render() {
+  const days = parseInt(document.getElementById('days').value);
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+  const cutoffStr = cutoff.toISOString().split('T')[0];
+
+  const filtered = data.entries.filter(e => e.date >= cutoffStr);
+
+  document.getElementById('count').textContent = `(${filtered.length} 天)`;
+  document.getElementById('gen-time').textContent = `数据更新于 ${data.updated || '未知'}`;
+
+  const el = document.getElementById('content');
+  if (!filtered.length) {
+    el.innerHTML = '<div class="empty">📭 所选范围内暂无沉淀记录</div>';
+    return;
+  }
+
+  el.innerHTML = filtered.map(e => `
+    <div class="entry">
+      <div class="entry-date">
+        📆 ${e.date}
+        <span class="icons">📝 ${e.changes_count || 0} 项变动</span>
+      </div>
+      <div class="entry-content">${renderMarkdown(e.summary)}</div>
+    </div>
+  `).join('');
+}
+
+function renderMarkdown(text) {
+  if (!text) return '<p>无详细记录</p>';
+  let html = text
+    .replace(/### (.+)/g, '<h3>$1</h3>')
+    .replace(/## (.+)/g, '<h2>$1</h2>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n- (.+)/g, '\n<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+    .replace(/\n/g, '<br>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+  return html;
+}
+</script>
+</body>
+</html>

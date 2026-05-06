@@ -1,0 +1,10 @@
+{
+  "updated": "2026-05-06 22:00",
+  "entries": [
+    {
+      "date": "2026-05-06",
+      "changes_count": 6,
+      "summary": "### 新建笔记\n- **Who is Frank.md** — Frank 全貌（含头像、LOGO、实验室网址）\n- **Who is Henry.md** — Henry 哲学定位、架构、91技能、五大任务\n- **Henry的能力.md** — 91个技能按10大领域分类\n- **Henry的工作记录.md** — 诞生至今9天完整大事记\n- **README.md** — 元信息文件夹使用说明\n\n### 笔记更新\n- **Henry的数据管理.md** — 从「Henry的总体设计」改名正名\n- **Frank与Henry的沟通方式.md** — 更新为六条通道（含AI萌宠）\n\n### 结构调整\n- 元信息重组为 Frank/ Henry/ Henry_log/ Assets 四目录\n- 全量双向链接修正\n- 补充 Frank 头像、迈刻微科 LOGO、实验室网址"
+    }
+  ]
+}
