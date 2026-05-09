@@ -37,9 +37,19 @@ h1 .badge { background: var(--accent); color: #fff; font-size: 0.7rem; padding: 
 .obsidian-link:hover { border-bottom-style: solid; }
 .empty { text-align: center; color: var(--muted); padding: 40px; }
 .footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+.nav { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.nav a { color: var(--accent); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+.nav a:hover { background: var(--surface); }
+.nav a.active { background: var(--surface); }
 </style>
 </head>
 <body>
+
+<div class="nav">
+  <a href="index.html">📊 仪表盘</a>
+  <a href="consolidation.html" class="active">📋 沉淀报告</a>
+  <a href="upgrade-guide.html">🔄 运维指南</a>
+</div>
 
 <div class="header">
   <div>

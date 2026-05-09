@@ -50,9 +50,19 @@
   .pcard .prow { display:flex; justify-content:space-between; padding:3px 0; font-size:0.82rem; }
   .pcard .prow .pl { color:var(--dim); }
   .footer { text-align:center; color:var(--dim); font-size:0.7rem; margin-top:32px; padding-top:16px; border-top:1px solid var(--border); }
+  .nav { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .nav a { color: var(--accent); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+  .nav a:hover { background: var(--card); }
+  .nav a.active { background: var(--card); }
 </style>
 </head>
 <body>
+
+<div class="nav">
+  <a href="index.html" class="active">📊 仪表盘</a>
+  <a href="consolidation.html">📋 沉淀报告</a>
+  <a href="upgrade-guide.html">🔄 运维指南</a>
+</div>
 
 <h1>🤖 Henry Token 用量仪表盘</h1>
 <p class="subtitle">数据来源: ~/.hermes/state.db &nbsp;|&nbsp; 更新: 2026-05-09 06:55:43 &nbsp;|&nbsp; 自动每日刷新</p>
