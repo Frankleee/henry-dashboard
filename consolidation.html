@@ -44,7 +44,7 @@ h1 .badge { background: var(--accent); color: #fff; font-size: 0.7rem; padding: 
 <div class="header">
   <div>
     <h1>📋 Henry 每日沉淀报告 <span class="badge">Beta</span></h1>
-    <p class="updated">基于元信息文件夹变动，由 Henry 每日早晨自动生成</p>
+    <p class="updated">每日早晨 06:00 自动生成，统计区间为前一天 06:00 → 当天 06:00（24小时）</p>
   </div>
   <div class="controls">
     <label for="days">📅 显示范围：</label>
@@ -97,7 +97,7 @@ function render() {
   el.innerHTML = filtered.map(e => `
     <div class="entry">
       <div class="entry-date">
-        📆 ${e.date}
+        📆 ${e.window || e.date}
         <span class="icons">📝 ${e.changes_count || 0} 项变动</span>
       </div>
       <div class="entry-content">${renderMarkdown(e.summary)}</div>
