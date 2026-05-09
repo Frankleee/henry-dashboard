@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry 运维指南 — 版本更新 & 交叉升级</title>
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --border: #30363d;
+  --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+  --green: #3fb950; --orange: #d2991d; --red: #f85149;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; padding: 20px; max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 8px; color: var(--accent); }
+h2 { font-size: 1.2rem; color: var(--green); margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1rem; color: var(--orange); margin: 18px 0 8px; }
+p, li { font-size: 0.92rem; margin-bottom: 6px; }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; font-family: 'SF Mono', Monaco, monospace; }
+pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; margin: 10px 0 16px; }
+pre code { background: none; padding: 0; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 0.88rem; }
+th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+th { background: var(--surface); font-weight: 600; }
+.badge { background: var(--accent); color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; vertical-align: middle; margin-left: 6px; }
+.principle { background: var(--surface); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-weight: 600; }
+.warn { background: rgba(248,81,73,0.1); border-left: 4px solid var(--red); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+.checklist { list-style: none; padding-left: 0; }
+.checklist li::before { content: "☐ "; color: var(--muted); }
+.checklist li.done::before { content: "☑ "; color: var(--green); }
+.nav { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.nav a { color: var(--accent); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+.nav a:hover { background: var(--surface); }
+.footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); }
+.footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html">📊 仪表盘</a>
+  <a href="consolidation.html">📋 沉淀报告</a>
+  <a href="upgrade-guide.html" style="background:var(--surface)">🔄 运维指南</a>
+</div>
+
+<h1>🔄 Henry 运维指南 <span class="badge">v1.0</span></h1>
+<p style="color:var(--muted)">Henry（Hermes Agent）和 Mike（OpenClaw）的升级维护操作手册</p>
+
+<div class="principle">
+  ⚠️ 核心原则：Agent 不能自己升级自己。Gateway restart 会杀死当前进程。必须由另一个 Agent（或人工）执行。
+</div>
+
+<h2>一、交叉更新协议</h2>
+
+<h3>通用流程（A 升级 B）</h3>
+
+<table>
+<tr><th>步骤</th><th>Henry</th><th>Mike</th></tr>
+<tr><td>1. 确认版本</td><td><code>hermes --version</code></td><td><code>openclaw --version</code></td></tr>
+<tr><td>2. 备份</td><td><code>cp -r ~/.hermes ~/.hermes.bak.DATE</code></td><td><code>cp -r ~/.openclaw ~/.openclaw.bak.DATE</code></td></tr>
+<tr><td>3. 拉取</td><td><code>hermes update</code></td><td><code>npm update -g openclaw</code></td></tr>
+<tr><td>4. 依赖</td><td><code>pip install -r requirements.txt</code></td><td>npm 自动完成</td></tr>
+<tr><td>5. 重启</td><td><code>launchctl kickstart -k gui/$(id -u)/ai.hermes.gateway</code></td><td><code>launchctl kickstart -k gui/$(id -u)/ai.openclaw.gateway</code></td></tr>
+<tr><td>6. 验证</td><td colspan="2">等 5 秒 → 检查进程 → 发测试消息</td></tr>
+</table>
+
+<h3>升级前必查</h3>
+<ul>
+  <li><strong>OpenClaw</strong>：新版本是否有 channel 从 built-in 变为 external plugin？</li>
+  <li><strong>Hermes</strong>：新版本是否有 provider 迁移？secret redaction 默认值是否变更？</li>
+  <li><strong>Hermes</strong>：自定义 provider（百度/阿里/OpenCode Go）是否兼容？</li>
+</ul>
+
+<h3>踩坑记录</h3>
+
+<table>
+<tr><th>日期</th><th>谁升级谁</th><th>坑</th><th>修复</th></tr>
+<tr>
+  <td>2026-05-09</td>
+  <td>Mike(4.26→5.7) 被 Henry 升</td>
+  <td>飞书变外部插件，收不到消息</td>
+  <td><code>openclaw plugins install @openclaw/feishu</code></td>
+</tr>
+<tr>
+  <td>2026-05-09</td>
+  <td>Henry(0.11→0.13) 被 Mike 升</td>
+  <td>0600 权限硬化</td>
+  <td>自动修复，无手动干预</td>
+</tr>
+</table>
+
+<h2>二、Henry 升级详解</h2>
+
+<h3>推荐方式</h3>
+<pre><code>hermes update          # 最新稳定版
+hermes update --pre    # 预发布版</code></pre>
+
+<h3>手动 git 升级</h3>
+<pre><code>cd ~/.hermes/hermes-agent
+git fetch origin
+git checkout &lt;version-tag&gt;
+pip install -r requirements.txt
+hermes gateway restart</code></pre>
+
+<h3>升级后检查清单</h3>
+<ul class="checklist">
+  <li><code>hermes --version</code> 确认版本号</li>
+  <li><code>hermes doctor</code> 健康检查通过</li>
+  <li><code>hermes config list</code> 无异常警告</li>
+  <li>微信发消息收到回复</li>
+  <li>子 agent delegate_task 能正常工作</li>
+  <li>Cron job 下次运行正常</li>
+  <li>所有自定义 provider 可用</li>
+</ul>
+
+<h3>破坏性变更应对</h3>
+<table>
+<tr><th>风险</th><th>缓解</th></tr>
+<tr><td>Custom provider 失效</td><td>提前备份 config.yaml，升级后 hermes doctor</td></tr>
+<tr><td>Redaction 破坏输出</td><td>升级后 <code>hermes config set security.redact_secrets false</code></td></tr>
+<tr><td>Cron 被误判注入</td><td>检查 cron prompt 无明显注入特征</td></tr>
+<tr><td>Session 不兼容</td><td>备份 ~/.hermes/sessions/</td></tr>
+</table>
+
+<h3>回滚方案</h3>
+<pre><code>cd ~/.hermes/hermes-agent
+git checkout &lt;旧版本tag&gt;
+pip install -r requirements.txt
+hermes gateway restart</code></pre>
+
+<h2>三、Mike 升级详解</h2>
+<pre><code>npm update -g openclaw
+openclaw --version</code></pre>
+<ul class="checklist">
+  <li><code>openclaw plugins list</code> 确认 channel 在线</li>
+  <li>飞书发消息收到回复</li>
+  <li>微信 bridge 正常</li>
+  <li>重启后进程稳定（等 30 秒再验证）</li>
+</ul>
+
+<h2>四、救援协议</h2>
+<p>交叉更新是救援协议的上层补充：</p>
+<pre><code>救援协议：A 挂了 → B 重启 A 的 gateway（不改配置）
+交叉更新：A 要升级 → B 帮 A 升级 + 重启</code></pre>
+<p style="font-weight:600">两者共享安全原则：只碰对方 gateway，绝不改对方 config 文件。</p>
+
+<div class="warn">
+  <strong>救援入口：</strong><br>
+  Mike 救援 → Frank 通过 Henry 微信远程救援 Mike（mike-rescue skill）<br>
+  Henry 救援 → Frank 通过 Mike 飞书远程救援 Henry（henry-rescue skill）
+</div>
+
+<h2>五、版本历史</h2>
+<table>
+<tr><th>日期</th><th>版本</th><th>代号</th><th>关键变化</th></tr>
+<tr><td>2026-05-09</td><td>v0.13.0</td><td>The Tenacity</td><td>会话自动恢复、中文国际化、post-write linting、0600权限硬化</td></tr>
+<tr><td>2026-04-23</td><td>v0.11.0</td><td>—</td><td>初始部署版本（Frank 手动安装）</td></tr>
+</table>
+
+<div class="footer">
+  Henry (Hermes Agent) · Mac mini · <a href="index.html">仪表盘</a> · <a href="consolidation.html">沉淀报告</a>
+</div>
+
+</body>
+</html>
