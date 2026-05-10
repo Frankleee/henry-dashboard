@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-10 16:13",
+  "updated": "2026-05-10 17:00",
   "entries": [
     {
       "date": "2026-05-10",
       "window": "05-09 06:00 → 05-10 06:00",
-      "changes_count": 4,
-      "summary": "## 2026-05-09 沉淀报告\n\n### PET 人脸识别调试\n- Frank 通过 PET API server 排查 pet_face_watcher 始终返回\"无人\"\n- **根因**：只使用正面 Haar cascade，Frank 侧脸时检测不到；profile cascade 可检测但未集成\n- **状态**：硬件/软件功能正常，需后续添加 profile cascade 作 fallback\n\n### 微信宕机事故\n- Mac 重启后微信断连 15 分钟（22:40-22:55）\n- **根因**：JournalWidgets 复用旧 PID 853，`_pid_exists()` 未校验进程名导致误判\n- **修复**：Mike 跨救援，删除过期锁文件后重启 gateway\n- **教训**：`_pid_exists()` 需加 comm 校验，已记入 memory\n\n### OneDrive 同步方案确立\n- 确认 228GB/98K 文件全量本地化，Files On-Demand 已关（零占位符）\n- 停用官方客户端（File Provider 死锁频繁），改用 rclone v1.74.1 bisync 手动同步\n- rclone check 变化检测约 24 分钟，死锁修复命令已记录\n- `onedrive-daily-changes` 技能已创建\n\n### 每日沉淀系统异常\n- 5/10 早 cron 因网络故障和超时两次失败，下午手动补执行\n\n### 仪表盘修复\n- flash token 统计修复、导航栏对齐、昨日用量面板新增\n"
+      "changes_count": 3,
+      "summary": "## 05-09 06:00 → 05-10 06:00 元信息沉淀\n\n### 1. PET人脸识别调试\n- pet_face_watcher 只用正面 Haar cascade，Frank 侧脸时检测不到\n- profile cascade 可行但未集成到生产代码\n\n### 2. 微信宕机事故（22:40-22:55）\n- Mac 重启后 JournalWidgets 占用旧 PID 853，_pid_exists() 未校验进程名导致误判\n- Mike 跨救援修复：删除过期锁文件后重启 gateway\n- 事故报告：~/.openclaw/workspace/memory/hermes-incident-20260509.md\n- 教训：_pid_exists() 需加 comm 校验\n\n### 3. OneDrive 同步方案确立\n- 228GB/98K 文件全量本地化确认，Files On-Demand 已关\n- 停用官方客户端，改用 rclone bisync 手动同步（25min/次）\n- onedrive-daily-changes 技能已创建\n\n### 系统运维\n- 5/10 早 cron 两度故障（网络+超时），下午手动补执行\n- Obsidian记录.md 修复：重复标题 + 大事记排序\n\n[查看详情](https://frankleee.github.io/henry-dashboard/consolidation.html)"
     },
     {
       "date": "2026-05-09",
