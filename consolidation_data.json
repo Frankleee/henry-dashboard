@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-09 06:16",
+  "updated": "2026-05-10 14:27",
   "entries": [
+    {
+      "date": "2026-05-10",
+      "window": "05-09 06:00 → 05-10 06:00",
+      "changes_count": 3,
+      "summary": "## 2026-05-09 沉淀报告\n\n### PET 人脸识别调试\n- Frank 通过 PET API server 排查 pet_face_watcher 始终返回\"无人\"\n- **根因**：只使用正面 Haar cascade，Frank 侧脸时检测不到；profile cascade 可检测但未集成\n- **状态**：硬件/软件功能正常，需后续添加 profile cascade 作 fallback\n\n### 微信宕机事故\n- Mac 重启后微信断连 15 分钟（22:40-22:55）\n- **根因**：JournalWidgets 复用旧 PID 853，`_pid_exists()` 未校验进程名导致误判\n- **修复**：Mike 跨救援，删除过期锁文件后重启 gateway\n- **教训**：`_pid_exists()` 需加 comm 校验，已记入 memory\n\n### 每日沉淀系统异常\n- 5/10 早 cron 因网络故障（6:17 Connection error）和超时（11:33 TimeoutError）两次失败\n- 5/10 下午手动补执行，恢复数据同步\n\n### 仪表盘修复\n- flash token 统计修复：deepseek-v4-flash 从 Go 归入 DS 官方\n- 导航栏确认正常（浏览器缓存问题）\n- cron 时间已从 6:00 改为 6:30 避开网络故障窗口，但今早仍因故障导致失败\n"
+    },
     {
       "date": "2026-05-09",
       "window": "05-08 06:00 → 05-09 06:00",
