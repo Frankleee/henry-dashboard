@@ -1,6 +1,46 @@
 {
-  "updated": "2026-05-11 13:05",
+  "updated": "2026-05-12 06:45",
   "entries": [
+    {
+      "window": "05-11 06:30 → 05-12 06:30",
+      "changes_count": 4,
+      "changes": [
+        {
+          "type": "vault_migration",
+          "title": "Obsidian Vault 本地化迁移完成",
+          "detail": "Vault 从 /Volumes/SU710/Obsidian/ 迁至 ~/Documents/Obsidian Vault/（5/11 下午完成）。SU710 上的 Obsidian 目录已删除。所有笔记路径引用已批量更新。",
+          "impact": "沉淀 cron 不再依赖 SU710 外置盘，根除 git add -A I/O 阻塞风险"
+        },
+        {
+          "type": "maintenance",
+          "title": "Obsidian记录.md 残留重复标题已修复",
+          "detail": "清除 ### 2026-05-11 · Obsidian Sync 故障排查与修复 空白重复条目（前日补执行时未完全清除）"
+        },
+        {
+          "type": "config",
+          "title": "模型配置确认",
+          "detail": "Frank 要求默认模型设为 opencode-go deepseek-v4-pro（已于 5/11 会话中完成）"
+        },
+        {
+          "type": "architecture",
+          "title": "存储架构分离",
+          "detail": "Obsidian Vault 已迁离 SU710。OneDrive 数据（228GB）仍位于 /Volumes/SU710/.ODContainer-OneDrive/OneDrive/。git 操作不再影响 OneDrive 所在卷。"
+        }
+      ],
+      "notes_updated": [
+        "Henry的工作记录.md（新增 2026-05-12 条目 + 技能演进表 5/12 行）",
+        "Obsidian记录.md（修复重复标题 + 新增 2026-05-12 维护条目）",
+        "Onedrive记录.md（新增 2026-05-12 存储架构分离记录）"
+      ],
+      "disk_status": "SU710 正常挂载（APFS, /dev/disk7s1, 25% used）。Obsidian Vault 已不在该卷上。",
+      "vault_info": {
+        "path": "~/Documents/Obsidian Vault/",
+        "sync": "Obsidian Sync 已启用（付费至2027-05-07）",
+        "desktop_app": "LaunchAgent com.obsidian.auto 开机自启",
+        "git": "本地仓库，正常"
+      },
+      "date": "2026-05-12"
+    },
     {
       "window": "05-10 06:00 → 05-11 06:00",
       "execution_time": "2026-05-11T11:37:00+08:00",
