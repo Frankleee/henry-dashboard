@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-11 06:30",
+  "updated": "2026-05-11 11:50",
   "entries": [
     {
       "date": "2026-05-11",
-      "window": "05-10 17:10 → 05-11 06:30",
+      "window": "05-10 10:46 → 05-11 06:30",
       "changes_count": 3,
-      "summary": "## ⚠️ 2026-05-11 沉淀报告 — SU710 磁盘故障\n\n### 🔴 关键告警：SU710 外置 SSD 严重 I/O 阻塞\n- 根因：昨日 git add -A cron 任务锁定 APFS 卷\n- 当前状态：stat 可用，readdir/file read 全超时\n- diskutil unmount 也超时 —— **需要重启 Mac**\n- Obsidian 笔记本次无法更新，恢复记录已写入 /tmp/recovery_notes.md\n- 待磁盘恢复后需补执行步骤 2-5\n\n### Obsidian Sync 调试（05-10 上午至晚间）\n- Frank 手机看不到 Mac 笔记 → Henry 深度排查\n- 发现 Obsidian 桌面端未运行 → 手动启动\n- 创建 LaunchAgent plist 实现开机自启\n- 确认 Sync 远程仓库：f1e7a723 (sync-52.obsidian.md)\n- 多次调试失败后定位根因：git add -A cron 锁死 SU710 APFS\n- Henry 杀死 git 进程 + 暂停 cron\n- Frank 质疑 Sync 价值 → Henry 澄清 Sync（实时双向）与 git 备份（历史版本）互补\n\n### 文件路径变化\n- `Frank与Henry的沟通方式.md` 已不在 /Frank/ 目录\n- `Henry的工作记录.md` 已移到 /Henry_log/ 下\n- 待磁盘恢复后需确认新路径并更新链接\n"
+      "summary": "## ✅ 2026-05-11 沉淀报告 — 磁盘已恢复\n\n### Obsidian Sync 调试（05-10 上午至晚间）\n- Frank 手机看不到 Mac 笔记 → Henry 深度排查\n- 发现 Obsidian 桌面端未运行 → 手动启动\n- 创建 LaunchAgent plist 实现开机自启\n- 确认 Sync 远程仓库：f1e7a723 (sync-52.obsidian.md)\n- 多次调试失败后定位根因：git add -A cron 锁死 SU710 APFS\n- Henry 杀死 git 进程 + 暂停 cron\n- Frank 质疑 Sync 价值 → Henry 澄清 Sync（实时双向）与 git（历史版本）互补\n\n### SU710 磁盘恢复\n- 今早 Frank 手动重插 USB 后 I/O 恢复正常\n- 6:30 cron 沉淀任务在磁盘恢复后手动补执行完成\n- 全部 3 个 Obsidian 笔记已补写（沟通方式、工作记录、Obsidian记录）\n\n### 笔记更新\n- `Frank与Henry的沟通方式.md`：新增 Sync 桌面端依赖说明 + SU710 I/O 阻塞诊\n- `Henry的工作记录.md`：追加 05-10 Obsidian Sync 调试与 SU710 故障条目\n- `Obsidian记录.md`：追加 05-11 Sync 故障排查详细记录"
     },
     {
       "date": "2026-05-10",
