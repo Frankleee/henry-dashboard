@@ -1,6 +1,11 @@
 {
-  "updated": "2026-05-12 06:45",
+  "updated": "2026-05-13 06:54",
   "entries": [
+    {
+      "date": "2026-05-13",
+      "changes_count": 5,
+      "summary": "## 2026-05-13 每日沉淀\n\n**窗口**: 05-12 07:00 → 05-13 06:30 | 无新用户会话\n\n### 记忆组装\n- UP: 8张/1029字符（6固定+2轮换，警戒线80%）\n- Memory: 15张/1359字符（9固定+6全轮换，警戒线62%）\n\n### Vault 审计 (27项)\n- 2❌: 3文件缺YAML frontmatter (created/tags)\n- 3⚠️: README索引不全、1处历史死链、卡片长度偏高\n\n### 记忆审计 (20项)\n- 全✅无阻断\n\n### 日志更新\n- 工作记录、Obsidian记录、OneDrive记录、记忆文件、用量统计均已追加\n\n### Token 用量\n- 151 sessions | 5397 calls | 534.4M visible tokens\n- Go: 377.2M | DS: 155.3M\n\n[查看报告](https://frankleee.github.io/henry-dashboard/consolidation.html)"
+    },
     {
       "window": "05-11 06:30 → 05-12 06:30",
       "changes_count": 4,
