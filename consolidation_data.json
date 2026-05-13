@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-13 09:53",
+  "updated": "2026-05-13 10:13",
   "entries": [
     {
       "date": "2026-05-13",
       "window": "05-13 05:00 → 05-14 04:59",
-      "changes_count": 15,
-      "summary": "## 2026-05-13 · 沉淀流程修复与完善\n\n> 窗口：05-13 05:00 → 05-14 04:59\n\n### 发现问题\n- 今早 cron 的 session_search 摘要把 v4.0 重构压成 8 个字，工作记录只有 5 行空壳\n- Frank 要求排查 → 发现 session_search 两个致命缺陷：①不包活跃会话 ②LLM 摘要压缩丢失信息\n\n### 修复过程（三轮迭代）\n1. **活跃会话扫描**：创建 `scan_active_sessions.py`，consolidation-pipeline 步骤 1 拆为 1a+1b\n2. **一手信源重构**：完全废弃 session_search 摘要 → 创建 `input-acquisition` 技能，直接从 `session_*.json` 原文 + `git log` vault 变更两个信源获取\n3. **工作记录重写**：5/12 条目从 5 行 cron 日志重写为 Phase 1-4 完整实施记录\n\n### 笔记更新\n- `Henry定时任务.md`：补超时配置（gateway_timeout_warning 1200s, child_timeout 900s）\n- `Henry踩坑集.md`：#9 note-review↔vault-audit 职责分离 + #10 session_search 不可靠\n- `Henry记忆设计.md`：vault-audit 25→27项、daily 步骤 1 补充活跃扫描\n- `Henry自建技能.md`：卡片 20→21（补 input-acquisition）\n\n### 技能变更\n- 新增：`input-acquisition`、`scan_sessions.py`（替代 session_search）\n- 更新：`consolidation-pipeline`（步骤 1 改为调用 input-acquisition）\n- Cron `f25f3e98fe23` 挂载 input-acquisition 技能\n\n### 记忆组装\nUP 8张/1028字符（93%），Memory 14张/1332字符（76%）\n\n### Git\n`cd37083`, `9f73906`, `5d50c59`, `8d38dc2`, `7bceca2`\n\n---\n"
+      "changes_count": 6,
+      "summary": "## 2026-05-13 · 沉淀流程修复与完善\n\n> 窗口：05-13 05:00 → 05-14 04:59\n\n### 发现问题\n- 今早 cron 的 session_search 摘要把 v4.0 重构压成 8 个字，工作记录只有 5 行空壳\n- Frank 要求排查 → 发现 session_search 两个致命缺陷：①不包活跃会话 ②LLM 摘要压缩丢失信息\n\n### 修复过程（三轮迭代）\n1. **活跃会话扫描**：创建 `scan_active_sessions.py`，consolidation-pipeline 步骤 1 拆为 1a+1b\n2. **一手信源重构**：完全废弃 session_search 摘要 → 创建 `input-acquisition` 技能，直接从 `session_*.json` 原文 + `git log` vault 变更两个信源获取\n3. **工作记录重写**：5/12 条目从 5 行 cron 日志重写为 Phase 1-4 完整实施记录\n\n### 笔记更新\n- `Henry定时任务.md`：补超时配置（gateway_timeout_warning 1200s, child_timeout 900s）\n- `Henry踩坑集.md`：#9 note-review↔vault-audit 职责分离 + #10 session_search 不可靠\n- `Henry记忆设计.md`：vault-audit 25→27项、daily 步骤 1 补充活跃扫描\n- `Henry自建技能.md`：卡片 20→21（补 input-acquisition）\n\n### 技能变更\n- 新增：`input-acquisition`、`scan_sessions.py`（替代 session_search）\n- 更新：`consolidation-pipeline`（步骤 1 改为调用 input-acquisition）\n- Cron `f25f3e98fe23` 挂载 input-acquisition 技能\n\n### 记忆组装\nUP 8张/1028字符（93%），Memory 14张/1332字符（76%）\n\n### Git\n`cd37083`, `9f73906`, `5d50c59`, `8d38dc2`, `7bceca2`\n\n---"
     },
     {
       "date": "2026-05-12",
