@@ -1,10 +1,11 @@
 {
-  "updated": "2026-05-13 09:42",
+  "updated": "2026-05-13 09:47",
   "entries": [
     {
       "date": "2026-05-13",
-      "changes_count": 6,
-      "summary": "## 2026-05-13 变动\n\n### 沉淀流程修复\n- **根因发现**：session_search 两个致命缺陷——不包活跃会话 + LLM 摘要压缩丢失信息（v4.0 重构 313 行→8 个字）\n- **三轮修复**：① scan_active_sessions.py 补活跃会话 → ② input-acquisition 技能废弃摘要，双信源（session JSON 原文 + vault git log）→ ③ 工作记录重写\n\n### 笔记更新\n- Henry定时任务.md：补超时配置（1200s/900s/1800s）+ 流程描述加活跃扫描\n- Henry踩坑集.md：#9 note-review↔vault-audit 职责分离 + #10 session_search 不可靠；卡片 8→10 条教训\n- Henry记忆设计.md：vault-audit 25→27项、daily 步骤 1 补活跃扫描\n- Henry自建技能.md：卡片 20→21（补 input-acquisition）；新增第四节「技能演进时间线」\n- Henry的工作记录.md：5/11 三条合并、5/12 从 5 行 cron 日志重写为 Phase 1-4 完整记录、5/13 合并\n- Obsidian记录.md：对应合并更新\n\n### 技能变更\n- 新增：input-acquisition、scan_sessions.py\n- 更新：consolidation-pipeline（步骤 1 改为调用 input-acquisition）\n- Cron f25f3e98fe23 挂载 input-acquisition + 5AM 日界规则\n\n### 记忆系统\n- UP 8张/1147字符，Memory 14张/1619字符\n- 5/12 v4.0 全面实施文档化完成\n\n### Git\ncd37083, 9f73906, 5d50c59, 8d38dc2, 7bceca2, e7691a5"
+      "window": "05-13 05:00 → 05-14 04:59",
+      "changes_count": 15,
+      "summary": "## 2026-05-13 · 沉淀流程修复与完善\n\n> 窗口：05-13 05:00 → 05-14 04:59\n\n### 发现问题\n- 今早 cron 的 session_search 摘要把 v4.0 重构压成 8 个字，工作记录只有 5 行空壳\n- Frank 要求排查 → 发现 session_search 两个致命缺陷：①不包活跃会话 ②LLM 摘要压缩丢失信息\n\n### 修复过程（三轮迭代）\n1. **活跃会话扫描**：创建 `scan_active_sessions.py`，consolidation-pipeline 步骤 1 拆为 1a+1b\n2. **一手信源重构**：完全废弃 session_search 摘要 → 创建 `input-acquisition` 技能，直接从 `session_*.json` 原文 + `git log` vault 变更两个信源获取\n3. **工作记录重写**：5/12 条目从 5 行 cron 日志重写为 Phase 1-4 完整实施记录\n\n### 笔记更新\n- `Henry定时任务.md`：补超时配置（gateway_timeout_warning 1200s, child_timeout 900s）\n- `Henry踩坑集.md`：#9 note-review↔vault-audit 职责分离 + #10 session_search 不可靠\n- `Henry记忆设计.md`：vault-audit 25→27项、daily 步骤 1 补充活跃扫描\n- `Henry自建技能.md`：卡片 20→21（补 input-acquisition）\n\n### 技能变更\n- 新增：`input-acquisition`、`scan_sessions.py`（替代 session_search）\n- 更新：`consolidation-pipeline`（步骤 1 改为调用 input-acquisition）\n- Cron `f25f3e98fe23` 挂载 input-acquisition 技能\n\n### 记忆组装\nUP 8张/1028字符（93%），Memory 14张/1332字符（76%）\n\n### Git\n`cd37083`, `9f73906`, `5d50c59`, `8d38dc2`, `7bceca2`\n\n---\n"
     },
     {
       "window": "05-11 06:30 → 05-12 06:30",
