@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-15 08:32",
+  "updated": "2026-05-16 06:48",
   "entries": [
+    {
+      "date": "2026-05-16",
+      "window": "05-15 05:00 → 05-16 04:59",
+      "changes_count": 5,
+      "summary": "## 2026-05-16 · Provider 路由大反转 + Cron 修复验证\n\n> 窗口：05-15 05:00 → 05-16 04:59\n\n### Provider 稳定性验证与路由反转\n- **opencode-go 确认全天不稳定**（5/14-5/15 连续两天 `Connection error`），非时段问题\n- DeepSeek 官方 5/15 全天零断连 → **升为主力 provider**\n- 阿里百炼 10/10 ping 通过（kimi-k2.5, 3ms）→ 降级首选\n- 百度千帆仅 6/10 通过（20%超时）→ 仅做子 agent 苦力\n- opencode-go 降为最后手段（保留套餐，极端兜底）\n\n### 「网络黑窗」假设被推翻\n- 此前推断 6:00-6:40 存在网络黑洞 → **误判**\n- 根源是 opencode-go 流式管线不稳定，切换 deepseek 后同时段零断连\n- 教训：不要凭空推断根因，有证据才下结论\n\n### Cron 修复\n- f25f3e98fe23 provider 从 opencode-go 切换到 deepseek（deepseek-v4-pro）\n- 时间确认 6:30（黑窗不存在，无需避让）\n- 发现 `d9ad7f18f70f`（仪表盘）和 `bfc03f227a14`（git 备份）冗余 → **已删除**（非暂停）\n- Cron 不自动跟随主配置的架构缺陷已记录\n\n### 沟通平台讨论\n- Frank 考虑过飞书/apiserver/自建客户端/Telegram/小智\n- 最终：**微信主通道 + 飞书热备**（手机远程控制刚需）\n\n### 笔记更新（今日 cron）\n- Henry路由策略、大模型资源、定时任务、仪表盘 → 角色反转 + 稳定性数据\n- Frank的软件 → 更新路由描述\n- Henry踩坑集 → 孤儿吸收，新建 vault 笔记（13条踩坑）\n- 记忆卡片重新组装 → UP 8张/800c, Memory 16张/1479c\n\nGit\n`bf91ad8` | `c0e0513` | `61e0e41` | `14fc7b4`\n\n## 关联\n\n[[Who is Henry]] | [[Henry的能力]] | [[Henry的任务]] | [[Henry仪表盘]] | [[Henry记忆设计]] | [[Henry定时任务]] | [[Henry的大模型资源]] | [[Henry踩坑集]] | [[Henry用量统计]] | [[Henry记忆文件]] | [[Who is Frank]]"
+    },
     {
       "date": "2026-05-15",
       "window": "05-14 05:00 → 05-15 04:59",
