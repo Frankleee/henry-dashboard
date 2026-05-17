@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-17 06:39",
+  "updated": "2026-05-18 06:46",
   "entries": [
+    {
+      "date": "2026-05-18",
+      "window": "05-17 05:00 → 05-18 04:59",
+      "changes_count": 5,
+      "summary": "## 2026-05-18 · Cron微信交付修复 — 一行总结规则落地\n\n> 窗口：05-17 05:00 → 05-18 04:59\n\n### 核心事件：Cron 微信静默丢弃修复\n- Frank 发现 5/16-5/17 两次 cron 执行成功但微信无通知\n- 根因：iLink 限流（长回复 `rate limited: ret=-2`），`last_status: ok` 但 `last_delivery_error: rate limited`\n- Frank 明确要求：cron 中间过程不推送，只有最终一条微信汇报（成功或失败），有且仅有一条\n\n### 实现（两层保证）\n- **层1**：consolidation-pipeline 步骤 8 硬规则 — cron 最终回复严格一行（✅/❌ + 仪表盘链接）\n- **层2**：cron prompt 尾部硬规则覆盖最终格式\n- 创建参考文档 `cron-wechat-delivery.md`\n\n### 笔记更新\n- Henry定时任务.md 卡片更新：cron微信交付规则\n- Henry踩坑集.md 卡片新增：cron微信交付限流陷阱\n- consolidation-pipeline 技能 patch：步骤 8 规则 + 禁止行为\n\n### Provider 状态\n- deepseek-v4-pro 官方直连持续稳定（无断连）\n- opencode-go 确认全天候不稳定（非时段问题）\n\n### 定时维护\n- Vault 审计：全部通过\n- 记忆组装：USER 8张 / MEM 16张，均与 vault 一致\n- 孤儿条目：0"
+    },
     {
       "date": "2026-05-17",
       "window": "05-16 05:00 → 05-17 04:59",
