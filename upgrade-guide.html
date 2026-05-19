@@ -88,6 +88,12 @@ th { background: var(--surface); font-weight: 600; }
   <td>0600 权限硬化</td>
   <td>自动修复，无手动干预</td>
 </tr>
+<tr style="background: rgba(248,81,73,0.08)">
+  <td>2026-05-19</td>
+  <td>Henry(评估 0.14.0)</td>
+  <td>🔴 Rate limit crash (#27370): 429 时 fallback 崩溃</td>
+  <td><strong>暂不升级</strong>，等 v0.14.1</td>
+</tr>
 </table>
 
 <h2>二、Henry 升级详解</h2>
@@ -108,7 +114,7 @@ hermes gateway restart</code></pre>
   <li><code>hermes --version</code> 确认版本号</li>
   <li><code>hermes doctor</code> 健康检查通过</li>
   <li><code>hermes config list</code> 无异常警告</li>
-  <li>微信发消息收到回复</li>
+  <li>飞书发消息收到回复</li>
   <li>子 agent delegate_task 能正常工作</li>
   <li>Cron job 下次运行正常</li>
   <li>所有自定义 provider 可用</li>
@@ -154,9 +160,21 @@ openclaw --version</code></pre>
 <h2>五、版本历史</h2>
 <table>
 <tr><th>日期</th><th>版本</th><th>代号</th><th>关键变化</th></tr>
+<tr><td>2026-05-19</td><td><strong>v0.14.0 ⏸️ 暂缓</strong></td><td>The Foundation</td><td>评估后不升级：rate limit crash bug (#27370) 直击 fallback 链</td></tr>
 <tr><td>2026-05-09</td><td>v0.13.0</td><td>The Tenacity</td><td>会话自动恢复、中文国际化、post-write linting、0600权限硬化</td></tr>
 <tr><td>2026-04-23</td><td>v0.11.0</td><td>—</td><td>初始部署版本（Frank 手动安装）</td></tr>
 </table>
+
+<div class="warn">
+  <strong>🔴 v0.14.0 评估记录（2026-05-19）— 暂不升级</strong><br><br>
+  <strong>决策</strong>：暂不升级，等 v0.14.1 补丁发布。<br><br>
+  <strong>核心新特性</strong>：冷启动-19s · pip install 发布 · 飞书懒加载 · 跨会话 Claude prompt cache · /handoff 实时会话转移 · Teams 端到端 · Grok OAuth · 180× 浏览器加速。官方确认无 breaking changes。<br><br>
+  <strong>致命风险 — Bug #27370/#27465</strong>：<code>agent/conversation_loop.py</code> 重构遗漏 <code>_ra()</code> 包装，任何 provider 返回 HTTP 429 时 <code>_pool_may_recover_from_rate_limit</code> 未定义，整轮崩溃。<br>
+  Frank 的 fallback 链 <strong>deepseek → alibaba → baidu</strong> 依赖此路径，高峰期 deepseek 限流即炸。<br><br>
+  <strong>次要风险</strong>：飞书适配器改为懒加载（首次使用才 pip install），升级后第一轮可能卡 10-20s。<br><br>
+  <strong>补丁状态</strong>：一行代码 fix（<code>_ra()._pool_may_recover_from_rate_limit(...)</code>），已在 PR 中，预计数日内发布 v0.14.1。<br><br>
+  <strong>升级后需预装</strong>：<code>pip install hermes-agent[feishu]</code> 避免懒加载延迟。
+</div>
 
 <div class="footer">
   Henry (Hermes Agent) · Mac mini · <a href="index.html">仪表盘</a> · <a href="consolidation.html">沉淀报告</a>
