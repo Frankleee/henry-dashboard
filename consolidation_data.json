@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-19 06:38",
+  "updated": "2026-05-20 06:41",
   "entries": [
     {
       "date": "2026-05-19",
       "window": "05-18 05:00 → 05-19 04:59",
-      "changes_count": 1,
-      "summary": "## 2026-05-19 · 无活动日\n\n> 窗口：05-18 05:00 → 05-19 04:59\n\n无 Frank 交互，无 Vault 变更。流水线正常运行（deepseek-v4-pro）。\nVault 审计：发现重复 Henry踩坑集（Henry/ + Henry_log/ 各一），其余通过。\n记忆文件与 vault 一致，无孤儿条目。\n\n---"
+      "changes_count": 5,
+      "summary": "## 2026-05-19 · 主通道切换至飞书\n\n> 窗口：05-18 05:00 → 05-19 04:59\n\n### 核心事件：主通道从微信切换至飞书\n- Frank 在飞书输入 `/sethome`，将飞书设为 Hermes home channel\n- **决策原因**：微信 iLink 限流不稳定，飞书企业级通道更可靠\n- **影响范围**：cron 交付、主动汇报、所有日常交互默认走飞书\n- **微信状态**：保留作为备用辅助通道（手机远程控制刚需）\n- **实现方式**：飞书网关 `/sethome` 命令执行，无需修改 cron 配置\n\n### 沉淀清单\n- Frank的沟通偏好.md：全量更新（主通道从微信→飞书，新增飞书章节，微信降为备用）\n- Memory：USER 和 MEMORY 条目同步更新\n- Henry定时任务.md：后续 cron 交付方式顺应主通道自动切换\n- 工作记录：本次变更记录\n\n### Hermes 版本评估（v0.14.0）\n- 当前 v0.13.0 (2026.5.7)，最新 v0.14.0 (2026.5.16 — The Foundation)\n- **决策：暂不升级**。致命 bug #27370/#27465：rate limit 时 fallback 链崩溃（`_pool_may_recover_from_rate_limit` 未定义）\n- Frank 的 fallback 链 deepseek→alibaba→baidu 依赖此路径，高峰期限流即炸\n- 补丁一行代码，等 v0.14.1\n- Henry版本更新指南.md 已更新评估记录和踩坑表\n\n### OneDrive 迁至主 SSD\n- **背景**：Frank 已对 OneDrive 云端大幅瘦身（228GB → ~106Gi）\n- **方法**：`rclone copy onedrive: → ~/Documents/OneDrive/`（云端直拉，避开 SU710 脏缓存）\n- **新增约定**：`$ONEDRIVE_ROOT` 环境变量（~/.hermes/.env）统一指代根路径；笔记用 `📁OneDrive/...` 符号引用，不写死物理路径\n- **全量扫 Vault**：18 处硬编码 SU710 路径 → `📁OneDrive` 符号替换\n- **更新笔记**：Onedrive记录.md（迁移日志+基本信息）、Henry的数据管理.md（卡片+架构）、Frank的硬件.md（OneDrive迁出）、Frank与Henry的沟通方式.md（路径）、Henry的任务.md（路径）、README.md（映射描述）\n- **技能更新**：onedrive-management/references/status.md 全量更新\n- SU710 仍保留作为外置存储，但 OneDrive 不再依赖它\n\n### 定时维护\n- Vault 审计：发现重复 Henry踩坑集（Henry/ + Henry_log/ 各一），其余通过。\n- 记忆文件与 vault 一致，无孤儿条目。\n\nGit\n新增提交\n\n---"
     },
     {
       "date": "2026-05-18",
