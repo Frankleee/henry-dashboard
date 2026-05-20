@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-20 06:41",
+  "updated": "2026-05-21 06:50",
   "entries": [
+    {
+      "date": "2026-05-21",
+      "window": "05-20 05:00 → 05-21 04:59",
+      "changes_count": 5,
+      "summary": "## 2026-05-21 · 路由重配 + Program 笔记启动 + 硬件时间线大修\n\n> 窗口：05-20 05:00 → 05-21 04:59\n\n### 路由策略大反转\n- Frank 要求改路由：**opencode-go 重回主力**（deepseek-v4-pro），降级链 deepseek→alibaba→baidu\n- 发现 OPENCODE_GO_BASE_URL 在 `.env` 中被注释 → 全量流量 fallback 到 deepseek 官方扣费\n- 修复 `.env` 后 opencode-go 恢复正常\n\n### OneDrive 数据目录摸排\n- 扫描 `$ONEDRIVE_ROOT/数据/`：Identity→Program→Project 三层结构，7 Identity → 109 Program → ~810 Project\n- Frank 要求为 109 个 Program 逐批写 Obsidian 笔记\n\n### Program 笔记系统启动\n- 在 vault 新建 `数据/` 目录（与元信息/同级），废弃旧工作笔记编号\n- **#1 [I01][P101] 数据管理** 创建完成：契约文件清单 + 数据提升 TODO\n- 笔记格式确立：文件名=标题=[Pxxx]名称，每篇含 📋数据提升TODO\n- 质道术框架（contract→收获→环境→思维模型）尝试后废弃，改用简化格式\n\n### Frank 档案更新\n- **硬件时间线大修**：手机(2013 华为U9508→小米14)、笔记本(联想扬天→小新Pro13)、台式机(2017自攒)、Mac mini M4(2026.3 饶为栋教育优惠)、汽车(海狮05EV 2025.6)、存储(4T HDD+2T加密SSD+U盘)\n- **软件账号管理**：API key→env vars 方案确立，frank_key AI 密钥整合，飞书 bot 密钥补录\n- OneDrive 容量更正：228GB→~106Gi（5/19 瘦身后）\n\n### 笔记与系统维护\n- Frank的硬件.md：设备时间线完整重写 + 待完善清单\n- Frank的软件.md：新增软件账号汇总表 + 密钥策略\n- Henry的数据管理.md：关联链接新增 [P101]数据管理\n- 卡片裁剪：Frank的软件(114→104)、Henry定时任务(157→95)、Henry的数据管理(116→93)\n- Vault 审计：A7(Henry踩坑集重名)、D1(工作记录双5/19条目)、D3(工作记录571行超500)待修\n- 记忆组装：USER 8/MEM 16，容量正常"
+    },
     {
       "date": "2026-05-19",
       "window": "05-18 05:00 → 05-19 04:59",
