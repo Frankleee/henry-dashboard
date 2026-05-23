@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-23 06:38",
+  "updated": "2026-05-23 08:52",
   "entries": [
+    {
+      "date": "2026-05-23",
+      "window": "05-22 05:00 → 05-23 04:59",
+      "changes_count": 6,
+      "summary": "## 2026-05-23 · P113事故复盘 + 路由重整 + [I01]全盘规范化 + 技能大修\n\n> 窗口：05-22 05:00 → 05-23 04:59\n\n### P113 吃瓜笔记 + OneDrive同步事故\n- Frank 整理 P113 目录（620文件→14目录+疫情盘点），同步方向搞反 + `rclone delete --include \"*.jpg\"` 误删子目录数百文件\n- **根因**：未 dry-run + 不知道 `--include` 递归 → 🔴铁律：rclone 改前确认+声明方向+等确认+dry-run+再确认+执行\n- Frank 从回收站恢复 → 最终 548文件 1.2GB\n- 写入踩坑集 #12、onedrive-management 技能 CRITICAL RULE、Onedrive记录\n\n### 路由重整\n- **主力**：opencode-go → baidu deepseek-v4-pro（Coding Plan预付费）\n- **fallback链**：opencode-go → deepseek官方 → alibaba kimi-k2.5 → baidu glm-5.1\n- opencode-go 续费为 fallback 第2级\n- 存量bug：不带provider前缀的model切换静默留在当前provider\n\n### 晚间批量工作（按git log时间线）\n- P116美景：9篇笔记(1主+8子)；P121价值创造：5篇(1主+4子)；P122 AI开发：主笔记\n- P113/P114/P115/P116 基于实际文件全面扩写\n- [I01]个人生活总笔记重构：10 Programs全景盘点完成，全盘规范化45篇笔记补全frontmatter+📄卡+关联段\n- 清理脏文件 + 修复5篇旧引用\n\n### 技能体系\n- entity-folder-system 大修：Program待办汇总convention + 模板占位符 + 审查指南\n- 新建 meta-info-writing 技能：元信息笔记v3 card+agent-oriented writing\n- note-review ↔ vault-audit 职责分离\n\n### 今日统计\n- Vault提交：10次 push | 新建/更新笔记：~50篇 | 新建技能：1个（meta-info-writing）| 更新技能：2个（entity-folder-system、onedrive-management）\n\n### Git\n`cbcdaa8`..`4bc15ce` | 10次提交"
+    },
     {
       "date": "2026-05-22",
       "window": "05-21 05:00 → 05-22 04:59",
