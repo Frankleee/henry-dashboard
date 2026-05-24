@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-24 06:39",
+  "updated": "2026-05-25 06:35",
   "entries": [
+    {
+      "date": "2026-05-25",
+      "window": "05-24 05:00 → 05-25 04:59",
+      "changes_count": 3,
+      "summary": "## 2026-05-25 · 静默维护日\n> 窗口：05-24 05:00 → 05-25 04:59\n\n### 沉淀与维护\n- 窗口内无用户交互（仅 cron 自运行）\n- Vault 审计通过（A1-E3, F1-F4），27 项无 FAIL\n- 修复 2 处过期引用：定时任务表 provider(opencode-go→baidu)、Who is Henry cron 数量(4→1)\n- 记忆系统正常：UP 8卡/796c, MEM 16卡/1632c\n\n### Vault 状态\n- WARN: 工作记录 777 行 > 500 阈值，待拆月度归档\n- WARN: Obsidian记录 201 行 > 200 阈值，待拆月度归档\n- A7 已知：Henry踩坑集.md 双重副本（Henry/ + Henry_log/）\n\n### Git\n`36c98b0`→`e816c2a`"
+    },
     {
       "date": "2026-05-24",
       "window": "05-23 05:00 → 05-24 04:59",
