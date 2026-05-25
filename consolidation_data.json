@@ -1,6 +1,12 @@
 {
-  "updated": "2026-05-25 06:35",
+  "updated": "2026-05-26 06:38",
   "entries": [
+    {
+      "date": "2026-05-26",
+      "window": "05-25 05:00 → 05-26 04:59",
+      "changes_count": 6,
+      "summary": "## 2026-05-26 · 路由大简化 + Mike 维护\n\n> 窗口：05-25 05:00 → 05-26 04:59\n\n### 路由体系大简化\n- **百度+阿里 Coding Plan 到期不续**。路由从4通道简化为2通道：opencode-go 主力 → deepseek官方兜底\n- 主力：opencode-go deepseek-v4-pro（$10/月套餐）\n- 兜底：deepseek 官方 v4-pro（按量付费）\n- 受影响笔记：路由策略、大模型资源（全面更新）\n\n### Vision 通路确认\n- opencode-go 的 kimi-k2.6/kimi-k2.5/mimo-v2-omni 实测通过 vision\n- 识图首选 kimi-k2.6（最新版）\n\n### Mike Agent 维护\n- 路由同步更新：opencode-go/deepseek-v4-pro 主力\n- OpenClaw 升级：v2026.5.7 → v2026.5.22\n- 停用 3 项 cron（心跳/自进化/记忆维护）— 数据数周无变化，空耗 token\n- 保留 henry-rescue skill\n\n### Hermes 版本调研\n- 检查新版本，之前发现的问题仍未完全解决，暂不升级\n\n### 定时任务卡片修复\n- Henry定时任务.md 卡片 provider 同步：baidu → opencode-go\n\n### Git\n`e816c2a`→`364061f` | 7 次提交（含 live session + 本次 cron）"
+    },
     {
       "date": "2026-05-25",
       "window": "05-24 05:00 → 05-25 04:59",
