@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-04 06:35",
+  "updated": "2026-06-05 06:41",
   "entries": [
+    {
+      "date": "2026-06-05",
+      "window": "06-04 05:00 → 06-05 04:59",
+      "changes_count": 5,
+      "summary": "## 2026-06-05 · Mike飞书修复与Hermes更新评估\n\n> 窗口：06-04 05:00 → 06-05 04:59\n\n### Cursor 学生会员研究\n- Frank 询问 Cursor 学生免费计划可行性\n- 结论：对大陆学生基本行不通——需 .edu 邮箱（非 .edu.cn），SheerID 认证不支持 China\n- 有 GitHub 社区方案（DIFFfeng/Cursor-free-student）可作备选\n\n### Hermes 更新评估\n- 当前 v0.13.0（2026.5.7），落后 1425 commits，最新稳定版 v0.15.1（2026.5.29）\n- 决策：由 Mike 通过 cross-update 协议升级 Henry（Agent 不可自升级）\n- 更新尚未执行，待 Mike 操作\n\n### Mike 飞书无响应修复\n- 现象：Frank 飞书发消息 Mike 不回\n- 根因：opencode-go/deepseek-v4-pro 超时 117s，Mike 无 fallback 配置 → 一次超时彻底哑巴\n- 修复：Mike openclaw.json 添加 `fallbacks: [\"deepseek/deepseek-v4-pro\"]`，重启 gateway 生效\n- 同时创建 `mike-rescue` skill + 更新 `cross-update` skill（新增「活着但不回消息」诊断模式）\n\n### 状态\n- 路由：opencode-go DSv4pro 主力 + deepseek 官方兜底，双通道\n- Mike 路由：opencode-go DSv4pro + deepseek fallback（已对齐）\n- cron: 1个活跃（f25f3e98fe23 每日沉淀）\n- Hermes 更新：待执行（v0.13→v0.15.1，由 Mike 操作）\n\n### Git\n待提交"
+    },
     {
       "date": "2026-06-04",
       "window": "06-04 05:00 → 06-05 04:59",
