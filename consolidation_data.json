@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-07 06:35",
+  "updated": "2026-06-08 06:35",
   "entries": [
+    {
+      "date": "2026-06-08",
+      "window": "06-07 05:00 → 06-08 04:59",
+      "changes_count": 3,
+      "summary": "## 2026-06-08 · 无用户交互\n\n> 窗口：06-07 05:00 → 06-08 04:59\n\n### 沉淀与维护\n- 窗口内无用户会话（0 sessions），无 vault 用户修改\n- cron 自维护正常：Memory 组装 UP 8卡/788c MEM 16卡/1611c\n- 无 provider 故障\n\n### 状态\n- 路由：opencode-go DSv4pro 主力 + deepseek 官方兜底\n- cron: 1个活跃（f25f3e98fe23 每日沉淀）\n\n### Git\n待提交"
+    },
     {
       "date": "2026-06-07",
       "window": "06-06 05:00 → 06-07 04:59",
@@ -174,12 +180,6 @@
       "window": "05-07 06:00 → 05-08 06:00",
       "changes_count": 1,
       "summary": "## 2026-05-07 · ESP32 配网调试 & 策略调整\n> 窗口：05-07 06:00 → 05-08 06:00\n\n**ESP32 萌宠调试持续推进。每日沉淀系统按计划运行。**\n\n- 🔧 ESP32-S3 小智配网调试：完成 NVS 擦除、OTA 升级（v1.9.2→v1.9.4）\n- 🔍 关键发现：v1.9.2/v1.9.4 配网页面**无 WebSocket 服务器地址字段**（仅 Wi-Fi/OTA 配置）\n- 🎯 策略调整：改为 NVS 直写服务器地址（需查固件源码 `settings.h`/`settings.cc` 确定 NVS key 名）\n- 📝 更新 [[AI萌宠终端方案]]：补充 SKU 型号（bread-compact-wifi）、UUID、固件版本、本地服务器地址详情\n- 🤖 每日沉淀 cron 正常执行\n\n---"
-    },
-    {
-      "date": "2026-05-06",
-      "window": "5/6 全天",
-      "changes_count": 6,
-      "summary": "### 新建笔记\n- **Who is Frank.md** — Frank 全貌（含头像、LOGO、实验室网址）\n- **Who is Henry.md** — Henry 哲学定位、架构、91技能、五大任务\n- **Henry的能力.md** — 91个技能按10大领域分类\n- **Henry的工作记录.md** — 诞生至今9天完整大事记\n- **README.md** — 元信息文件夹使用说明\n\n### 笔记更新\n- **Henry的数据管理.md** — 从「Henry的总体设计」改名正名\n- **Frank与Henry的沟通方式.md** — 更新为六条通道（含AI萌宠）\n\n### 结构调整\n- 元信息重组为 Frank/ Henry/ Henry_log/ Assets 四目录\n- 全量双向链接修正\n- 补充 Frank 头像、迈刻微科 LOGO、实验室网址"
     }
   ]
 }
