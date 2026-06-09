@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-09 08:23",
+  "updated": "2026-06-10 07:16",
   "entries": [
+    {
+      "date": "2026-06-10",
+      "window": "06-09 05:00 → 06-10 04:59",
+      "changes_count": 1,
+      "summary": "## 2026-06-10 · 无用户交互\n\n> 窗口：06-09 05:00 → 06-10 04:59\n\n- 窗口内无用户会话（0 sessions），API server 有 6 次调用（疑似豆豆设备心跳/查询）\n- cron 自维护正常：vault 7 文件变更已在前一日沉淀中全部收录\n- 无 provider 故障，无 iLink 限流"
+    },
     {
       "date": "2026-06-09",
       "window": "06-08 05:00 → 06-09 04:59",
@@ -174,12 +180,6 @@
       "window": "05-09 06:00 → 05-10 06:00",
       "changes_count": 1,
       "summary": "## 2026-05-09 · PET人脸识别 & 微信宕机 & OneDrive方案\n> 窗口：05-09 06:00 → 05-10 06:00\n\n**PET 人脸识别调试 + 微信宕机事故处理 + OneDrive 同步方案确立。**\n\n- 🔍 PET 人脸识别根因定位：pet_face_watcher 只用正面 Haar cascade，Frank 侧脸时检测不到。profile cascade 可行但未集成到生产代码\n- 🚨 微信宕机事故（22:40-22:55）：Mac 重启后 JournalWidgets 占用旧 PID 853，_pid_exists() 未校验进程名导致误判为重复 gateway。Mike 跨救援修复\n- 📝 事故报告生成：`~/.openclaw/workspace/memory/hermes-incident-20260509.md`\n- 💡 经验教训：`_pid_exists()` 需加 comm 校验，`~/.local/state/hermes/gateway-locks/` 过期锁文件需重启后清理\n- ☁️ OneDrive 同步方案确立：228GB/98K 文件全量本地化确认，Files On-Demand 已关（零占位符）。停用官方客户端，改用 rclone bisync 手动同步（v1.74.1，25min/次）。死锁修复：killall OneDrive → killall fileproviderd → 重启。变更检测脚本 `onedrive-daily-changes` 已创建为技能\n\n---"
-    },
-    {
-      "date": "2026-05-08",
-      "window": "05-08 06:00 → 05-09 06:00",
-      "changes_count": 1,
-      "summary": "## 2026-05-08 · PET 三大功能验证通过\n> 窗口：05-08 06:00 → 05-09 06:00\n\n**PET 终端三大功能验证通过：语音对话、摄像头视觉、邮件操作。**\n\n- 🎙️ PET 语音对话验证通过：5/8 晚 Frank 通过 PET API server 多次会话，包括 QQ 邮箱查询、邮件删除、摄像头测试\n- 📷 Mac mini USB 摄像头验证通过：imagesnap 成功拍照 1920×1080，Henry 可分析摄像头画面（此前因 TCC 权限失败，5/8 晚已解决）\n- 📧 PET 邮件操作验证通过：Frank 通过 PET 语音成功查看 PKU代收 邮件列表并删除隔离通知邮件\n- 📝 更新 [[AI萌宠终端方案]]：新增三项验证通过的已完成条目\n- 📝 更新 [[Frank与Henry的沟通方式]]：PET 状态从「新增」改为「已上线」，邮箱能力更新（支持按指令删除）\n\n---"
     }
   ]
 }
