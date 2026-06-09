@@ -1,17 +1,17 @@
 {
-  "updated": "2026-06-09 08:19",
+  "updated": "2026-06-09 08:23",
   "entries": [
     {
       "date": "2026-06-09",
       "window": "06-08 05:00 → 06-09 04:59",
-      "changes_count": 3,
-      "summary": "## 2026-06-09 · 豆豆延迟优化 + 车载方案 + 沉淀盲区修复\n\n> 窗口：06-08 05:00 → 06-09 04:59\n\n### 豆豆延迟优化\n- VAD 2500→800ms，预期省 1.5-1.7s 感知延迟\n- TTS 调研：EdgeTTS 0.62s vs SiliconFlow 0.72s，决定不换\n- 剩余瓶颈：LLM(v4-pro)，后续方向走 flash 模型\n\n### 车载方案讨论\n- DJI Mic Mini、掌阅翻页器均不适合做语音前端\n- 豆豆(ESP32-S3)就是最佳车载前端\n\n### 二手电脑评估\n- MBP 2019 32G+512G 不买，M4 Mac mini 性价比碾压\n\n### 重大发现：沉淀 cron 系统性盲区\n- scan_sessions.py 只扫 JSON 文件，Hermes 6/4后不再写入\n- 修复：新增 state.db SQLite 回退信源"
+      "changes_count": 16,
+      "summary": "## 2026-06-09 · 豆豆全功能开发 + 延迟优化 + 沉淀修复\n\n> 窗口：06-08 05:00 → 06-09 04:59\n\n### 豆豆（车载语音助手）— 全天从零开发\n- OTA公网修复：ws内网IP → wss://ws.mikewake.cn，手机热点可连\n- 手机热点适配：发现仅支持2.4GHz，SSID统一改名111与路由同名\n- 简报语音播报：逐条编号格式 + prompt注入8板块播报规则\n- 声纹+口令鉴权：WeSpeaker 8005端口，口令\"海狮起飞\"\n- 车载交互规范：6条规则（精简/无排版/不泄密/打断友好/路况优先）\n- 回声循环修复：冷却移至TTS播放完毕后+15秒窗口\n\n### 重大发现：Hermes API Server 架构限制\n- 单模型代理：固定路由，忽略model_name字段 → flash未生效根因\n- 可读不可写：能注入Memory但无工具调用能力\n- 方案B确定：豆豆发指令→Henry后台执行\n\n### 豆豆延迟优化\n- VAD 2500→800ms（data/.config.yaml），预期省1.5-1.7s\n- TTS全方案调研：EdgeTTS 0.62s vs SiliconFlow/MiniMax/阿里/火山→决定不换\n\n### 车载方案讨论\n- DJI Mic Mini/掌阅翻页器不适合 → 豆豆(ESP32-S3)就是最佳前端\n\n### 飞书修复\n- 审批按钮失效：FEISHU_ALLOWED_USERS未设置→已修复\n- 排版建议：避免Markdown表格和代码块\n\n### 沉淀 cron 系统性盲区发现与修复\n- scan_sessions.py 只扫JSON文件，Hermes 6/4后不再写入→5天全漏捕\n- 修复：新增state.db SQLite回退信源"
     },
     {
       "date": "2026-06-08",
       "window": "06-07 05:00 → 06-08 04:59",
-      "changes_count": 12,
-      "summary": "## 2026-06-08 · 豆豆架构深化 + 公网修复\n\n> 窗口：06-07 05:00 → 06-08 04:59\n\n### 豆豆（车载语音助手）— 从零开发多项功能\n- OTA公网修复：ws内网IP → wss://ws.mikewake.cn，手机热点可连\n- 手机热点适配：发现仅支持2.4GHz，SSID统一改名111与路由同名\n- 简报语音播报：逐条编号格式 + prompt注入播报规则，解决LLM敷衍问题\n- 声纹+口令鉴权：WeSpeaker 8005端口，口令\"海狮起飞\"\n- 车载交互规范：6条规则（精简/无排版/不泄密/打断友好/路况优先）\n\n### 重大发现：Hermes API Server 架构限制\n- 单模型代理：固定路由model:hermes-agent，忽略model_name字段\n- flash模型未生效根因在此（xiaozhi-server写model_name:flash无效）\n- 可读不可写：能注入Memory但无工具调用能力\n\n### 架构讨论：豆豆→Henry 任务桥接\n- 路线A（直连Agent）否决 / 路线B（豆豆发指令→Henry执行）推荐\n\n### 飞书修复\n- 审批按钮失效：FEISHU_ALLOWED_USERS未设置"
+      "changes_count": 1,
+      "summary": "## 2026-06-08 · 静默维护日\n\n> 窗口：06-07 05:00 → 06-08 04:59\n\n- cron 自维护正常：vault 审计、Memory 组装、仪表盘推送"
     },
     {
       "date": "2026-06-07",
