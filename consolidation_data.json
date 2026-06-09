@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 08:10",
+  "updated": "2026-06-09 08:19",
   "entries": [
     {
       "date": "2026-06-09",
@@ -10,8 +10,8 @@
     {
       "date": "2026-06-08",
       "window": "06-07 05:00 → 06-08 04:59",
-      "changes_count": 3,
-      "summary": "## 2026-06-08 · 无用户交互\n\n> 窗口：06-07 05:00 → 06-08 04:59\n\n### 沉淀与维护\n- 窗口内无用户会话（0 sessions），无 vault 用户修改\n- cron 自维护正常：Memory 组装 UP 8卡/788c MEM 16卡/1611c\n- 无 provider 故障\n\n### 状态\n- 路由：opencode-go DSv4pro 主力 + deepseek 官方兜底\n- cron: 1个活跃（f25f3e98fe23 每日沉淀）\n\n### Git\n待提交"
+      "changes_count": 12,
+      "summary": "## 2026-06-08 · 豆豆架构深化 + 公网修复\n\n> 窗口：06-07 05:00 → 06-08 04:59\n\n### 豆豆（车载语音助手）— 从零开发多项功能\n- OTA公网修复：ws内网IP → wss://ws.mikewake.cn，手机热点可连\n- 手机热点适配：发现仅支持2.4GHz，SSID统一改名111与路由同名\n- 简报语音播报：逐条编号格式 + prompt注入播报规则，解决LLM敷衍问题\n- 声纹+口令鉴权：WeSpeaker 8005端口，口令\"海狮起飞\"\n- 车载交互规范：6条规则（精简/无排版/不泄密/打断友好/路况优先）\n\n### 重大发现：Hermes API Server 架构限制\n- 单模型代理：固定路由model:hermes-agent，忽略model_name字段\n- flash模型未生效根因在此（xiaozhi-server写model_name:flash无效）\n- 可读不可写：能注入Memory但无工具调用能力\n\n### 架构讨论：豆豆→Henry 任务桥接\n- 路线A（直连Agent）否决 / 路线B（豆豆发指令→Henry执行）推荐\n\n### 飞书修复\n- 审批按钮失效：FEISHU_ALLOWED_USERS未设置"
     },
     {
       "date": "2026-06-07",
