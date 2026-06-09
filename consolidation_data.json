@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-09 06:35",
+  "updated": "2026-06-09 08:10",
   "entries": [
     {
       "date": "2026-06-09",
       "window": "06-08 05:00 → 06-09 04:59",
-      "changes_count": 1,
-      "summary": "## 2026-06-09 · 无用户交互\n\n> 窗口：06-08 05:00 → 06-09 04:59\n\n- 窗口内无新用户会话（0 sessions）\n- 6/8 live session 活动（wakers/ 文件夹创建、API Server 发现、豆豆公网修复等）已在 `## 2026-06-08` 条目详录\n- cron 自维护正常：vault 审计、Memory 组装 UP 8卡/809c MEM 16卡/1660c、仪表盘已推送\n\n### Git\n待提交"
+      "changes_count": 3,
+      "summary": "## 2026-06-09 · 豆豆延迟优化 + 车载方案 + 沉淀盲区修复\n\n> 窗口：06-08 05:00 → 06-09 04:59\n\n### 豆豆延迟优化\n- VAD 2500→800ms，预期省 1.5-1.7s 感知延迟\n- TTS 调研：EdgeTTS 0.62s vs SiliconFlow 0.72s，决定不换\n- 剩余瓶颈：LLM(v4-pro)，后续方向走 flash 模型\n\n### 车载方案讨论\n- DJI Mic Mini、掌阅翻页器均不适合做语音前端\n- 豆豆(ESP32-S3)就是最佳车载前端\n\n### 二手电脑评估\n- MBP 2019 32G+512G 不买，M4 Mac mini 性价比碾压\n\n### 重大发现：沉淀 cron 系统性盲区\n- scan_sessions.py 只扫 JSON 文件，Hermes 6/4后不再写入\n- 修复：新增 state.db SQLite 回退信源"
     },
     {
       "date": "2026-06-08",
