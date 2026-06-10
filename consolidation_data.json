@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-10 07:16",
+  "updated": "2026-06-11 06:35",
   "entries": [
+    {
+      "date": "2026-06-11",
+      "window": "06-10 05:00 → 06-11 04:59",
+      "changes_count": 2,
+      "summary": "## 2026-06-11 · 豆豆排查 + 空间清理 + 简历任务\n\n> 窗口：06-10 05:00 → 06-11 04:59\n\n### 飞书会话（06-10 10:21，7条消息）\n- **豆豆问题反馈**：Frank 反馈豆豆说话老是不回应，要求查看对话日志排查\n- **Mac mini 空间清理**：Frank 询问释放空间建议；确认清理飞书/微信缓存不影响 Hermes 记忆（记忆存 ~/.hermes/memories/ 和 Obsidian vault，与 app 缓存独立）\n- **OneDrive 约束**：Frank 明确要求不要动 OneDrive\n- **简历任务**：Frank 要求重新排序推荐所有简历，打包前 10 人（仅简历文件，不含证书）\n\n### Vault 变更\n- 无用户 vault 变更（仅 cron 自维护提交）"
+    },
     {
       "date": "2026-06-10",
       "window": "06-09 05:00 → 06-10 04:59",
@@ -174,12 +180,6 @@
       "window": "05-10 06:00 → 05-10 18:00",
       "changes_count": 1,
       "summary": "## 2026-05-10 · 仪表盘修复 & session_search根因修复 & 沉淀救火\n> 窗口：05-10 06:00 → 05-10 18:00\n\n**仪表盘三重修复 + session_search 根因修复 + 沉淀系统救火。**\n\n- 📊 仪表盘修复三连：flash token 从 Go 归入 DS 官方（SQL 过滤条件修正）；导航栏改为 `.nav` class，三页布局统一；新增「昨日用量」面板（统计区间 + 环比变化百分比）\n- 🔍 `session_search` 根因修复：新增 `since_hours` 参数，在 `hermes_state.py` 和 `session_search_tool.py` 两层实现。长会话（跨天）的新消息不再被漏掉——5/6 创建的 OneDrive 会话在 5/10 的 since_hours=24 搜索中被正确捕获\n- 🚒 沉淀 cron 救火：今早两次失败（6:17 Connection error + 11:33 TimeoutError），下午手动补执行两次。cron prompt 更新为 `since_hours=24` 并重启 gateway 验证通过\n- ☁️ OneDrive 同步方案补录：228GB 全量本地化、rclone bisync、死锁修复命令，补入工作记录和 Obsidian记录\n\n---"
-    },
-    {
-      "date": "2026-05-09",
-      "window": "05-09 06:00 → 05-10 06:00",
-      "changes_count": 1,
-      "summary": "## 2026-05-09 · PET人脸识别 & 微信宕机 & OneDrive方案\n> 窗口：05-09 06:00 → 05-10 06:00\n\n**PET 人脸识别调试 + 微信宕机事故处理 + OneDrive 同步方案确立。**\n\n- 🔍 PET 人脸识别根因定位：pet_face_watcher 只用正面 Haar cascade，Frank 侧脸时检测不到。profile cascade 可行但未集成到生产代码\n- 🚨 微信宕机事故（22:40-22:55）：Mac 重启后 JournalWidgets 占用旧 PID 853，_pid_exists() 未校验进程名导致误判为重复 gateway。Mike 跨救援修复\n- 📝 事故报告生成：`~/.openclaw/workspace/memory/hermes-incident-20260509.md`\n- 💡 经验教训：`_pid_exists()` 需加 comm 校验，`~/.local/state/hermes/gateway-locks/` 过期锁文件需重启后清理\n- ☁️ OneDrive 同步方案确立：228GB/98K 文件全量本地化确认，Files On-Demand 已关（零占位符）。停用官方客户端，改用 rclone bisync 手动同步（v1.74.1，25min/次）。死锁修复：killall OneDrive → killall fileproviderd → 重启。变更检测脚本 `onedrive-daily-changes` 已创建为技能\n\n---"
     }
   ]
 }
