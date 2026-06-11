@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-11 06:35",
+  "updated": "2026-06-12 06:35",
   "entries": [
+    {
+      "date": "2026-06-12",
+      "window": "06-11 05:00 → 06-12 04:59",
+      "changes_count": 1,
+      "summary": "## 2026-06-12 · 静默维护日\n\n> 窗口：06-11 05:00 → 06-12 04:59\n\n- 窗口内无实质性用户会话（仅 PET 豆豆 2 次语音交互：打招呼 + 新闻播报请求）\n- cron 自维护正常：vault 审计、Memory 组装、仪表盘待推送\n- 无 provider 故障，无 iLink 限流"
+    },
     {
       "date": "2026-06-11",
       "window": "06-10 05:00 → 06-11 04:59",
@@ -174,12 +180,6 @@
       "window": "05-11 05:00 → 05-12 04:59",
       "changes_count": 3,
       "summary": "## 2026-05-11 · 记忆系统设计 + Vault 迁移 + 磁盘恢复\n\n> 窗口：05-11 05:00 → 05-12 04:59\n\n### 记忆系统升级方案 v3.2 设计\n**Frank 与 Henry 共同设计记忆系统升级方案，解决 Memory 99% 饱和、触发缺失、与 Obsidian 不一致等问题。**\n- 🧠 一条铁律：Memory 不从零手写，从笔记卡片拉取组装。笔记卡片是唯一真相源\n- 📇 卡片格式：`> {一句话事实}。{关键数字/命令/路径}。{注意事项}。📄 笔记名.md`\n- 📊 最终草案：8 条卡片 / ~900 字符 / 41% 使用率\n- 🏠 质道术迁入 User Profile（从 Memory 移至 UP，独立存储）\n- 📝 产出：`记忆系统升级方案.md`（v3.2）、`记忆系统升级方案_memory草案.md`\n- ⚠️ Phase 1-4 待执行\n\n### Vault 本地化迁移\n- Frank 发现 SU710 和本地各有一个 vault（Sync 已同步），决定只保留本地\n- 安全操作：先断开 Sync → 移除 vault → `rm -rf /Volumes/SU710/Obsidian/`\n- 优势：不再受外置盘 I/O 阻塞影响\n- Henry 配置更新：`OBSIDIAN_VAULT_PATH` 切至 `~/Documents/Obsidian Vault/`\n\n### SU710 磁盘恢复 & 沉淀补执行\n- 5/11 6:30 cron：磁盘 I/O 阻塞致步 2-5 取消，仅推送 GitHub Pages（commit `693e42f`）\n- Frank 手动重插 USB → 磁盘恢复\n- 5/11 11:37：补执行完整沉淀任务\n\n---"
-    },
-    {
-      "date": "2026-05-10",
-      "window": "05-10 06:00 → 05-10 18:00",
-      "changes_count": 1,
-      "summary": "## 2026-05-10 · 仪表盘修复 & session_search根因修复 & 沉淀救火\n> 窗口：05-10 06:00 → 05-10 18:00\n\n**仪表盘三重修复 + session_search 根因修复 + 沉淀系统救火。**\n\n- 📊 仪表盘修复三连：flash token 从 Go 归入 DS 官方（SQL 过滤条件修正）；导航栏改为 `.nav` class，三页布局统一；新增「昨日用量」面板（统计区间 + 环比变化百分比）\n- 🔍 `session_search` 根因修复：新增 `since_hours` 参数，在 `hermes_state.py` 和 `session_search_tool.py` 两层实现。长会话（跨天）的新消息不再被漏掉——5/6 创建的 OneDrive 会话在 5/10 的 since_hours=24 搜索中被正确捕获\n- 🚒 沉淀 cron 救火：今早两次失败（6:17 Connection error + 11:33 TimeoutError），下午手动补执行两次。cron prompt 更新为 `since_hours=24` 并重启 gateway 验证通过\n- ☁️ OneDrive 同步方案补录：228GB 全量本地化、rclone bisync、死锁修复命令，补入工作记录和 Obsidian记录\n\n---"
     }
   ]
 }
