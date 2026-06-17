@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-17 06:33",
+  "updated": "2026-06-18 06:35",
   "entries": [
+    {
+      "date": "2026-06-18",
+      "window": "06-17 05:00 → 06-18 04:59",
+      "changes_count": 2,
+      "summary": "## 2026-06-18 · 静默维护日\n\n> 窗口：06-17 05:00 → 06-18 04:59\n\n### 用户交互\n- 窗口内无用户会话（飞书/PET 豆豆均无交互）。距上次活跃飞书会话已 11 天（上次 6/7）。\n\n### 系统自维护\n- cron 自维护正常：vault 审计、Memory 组装、仪表盘推送\n- 修复 Henry定时任务 卡片：cron 数 2→3（补充遗漏的 6:55 播客轮换）\n- 无 provider 故障，无 iLink 限流"
+    },
     {
       "date": "2026-06-17",
       "window": "06-16 05:00 → 06-17 04:59",
@@ -174,12 +180,6 @@
       "window": "05-17 05:00 → 05-18 04:59",
       "changes_count": 5,
       "summary": "## 2026-05-18 · Cron微信交付修复 — 一行总结规则落地\n\n> 窗口：05-17 05:00 → 05-18 04:59\n\n### 核心事件：Cron 微信静默丢弃修复\n- Frank 发现 5/16-5/17 两次 cron 执行成功但微信无通知\n- 根因：iLink 限流（长回复 `rate limited: ret=-2`），`last_status: ok` 但 `last_delivery_error: rate limited`\n- Frank 明确要求：cron 中间过程不推送，只有最终一条微信汇报（成功或失败），有且仅有一条\n\n### 实现（两层保证）\n- **层1**：consolidation-pipeline 步骤 8 硬规则 — cron 最终回复严格一行（✅/❌ + 仪表盘链接）\n- **层2**：cron prompt 尾部硬规则覆盖最终格式\n- 创建参考文档 `cron-wechat-delivery.md`\n\n### 笔记更新\n- Henry定时任务.md 卡片更新：cron微信交付规则\n- Henry踩坑集.md 卡片新增：cron微信交付限流陷阱\n- consolidation-pipeline 技能 patch：步骤 8 规则 + 禁止行为\n\n### Provider 状态\n- deepseek-v4-pro 官方直连持续稳定（无断连）\n- opencode-go 确认全天候不稳定（非时段问题）\n\n### 定时维护\n- Vault 审计：全部通过\n- 记忆组装：USER 8张 / MEM 16张，均与 vault 一致\n- 孤儿条目：0"
-    },
-    {
-      "date": "2026-05-17",
-      "window": "05-16 05:00 → 05-17 04:59",
-      "changes_count": 3,
-      "summary": "## 2026-05-17 · 静默日 — 流水线常规维护\n\n> 窗口：05-16 05:00 → 05-17 04:59\n\n### 当日概况\n- 无 Frank 交互（0 条用户消息）\n- Vault 无变更（唯一写操作来自昨日 cron）\n- 流水线正常运行（deepseek-v4-pro，无断连）\n\n### 定时维护\n- Vault 审计：27 项通过（A2 遗留 3 处 README 不一致）\n- 孤儿条目：MEMORY.md 无孤儿，全部 16+8 张卡片有锚点\n- 记忆组装：USER 8 张 1663B / MEM 16 张 2704B，均合规\n- 记忆审计：0❌ / 核心检查通过\n\n### Provider 状态\n- deepseek 官方直连稳定（5/15 起零断连）\n- 阿里百炼/百度千帆作为降级链保留\n\nGit\n无新增提交（vault clean）"
     }
   ]
 }
