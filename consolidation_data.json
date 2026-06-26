@@ -1,6 +1,12 @@
 {
-  "updated": "2026-06-24 06:35",
+  "updated": "2026-06-26 08:28",
   "entries": [
+    {
+      "date": "2026-06-26",
+      "window": "06-25 05:00 → 06-26 04:59",
+      "changes_count": 2,
+      "summary": "## 2026-06-26 · 手动补跑\n\n> 窗口：06-25 05:00 → 06-26 04:59\n\n### 用户交互\n- 上午 Frank 飞书对话：发现 cron 没汇报 → 手动重跑沉淀\n- 讨论：opencode-go 额度、模型列表(20模型)、分享 API Key、Memory 卡片腐败修复\n\n### 系统自维护\n- ❌ 6:30 cron 再次崩于 Connection error\n- Frank 手动触发沉淀（本条目）\n- opencode-go 实测正常，两把 Key 有效\n- 豆豆声纹已禁用，播客改连续模式\n- Memory 卡片修复：23→30、去动态数字、删孤儿去重\n- assembly 技能加固(5.0/5.1/5.2)、卡片禁动态数字、踩坑集#16"
+    },
     {
       "date": "2026-06-24",
       "window": "06-23 05:00 → 06-24 04:59",
@@ -174,12 +180,6 @@
       "window": "05-23 05:00 → 05-24 04:59",
       "changes_count": 4,
       "summary": "## 2026-05-24 · 窗口日期修复与记忆排序校准\n\n> 窗口：05-23 05:00 → 05-24 04:59\n\n### Cron 日期一致性修复\n- 5/23 6:30 cron 成功处理 5/22 晚间工作（P113-P122 全Program笔记、路由重整、[I01]规范化）\n- Frank 发现 cron 报告工作记录只显示到昨天 → 定位为窗口与日期标签错位问题\n- 修复：补建工作记录条目 + 踩坑集新增 pitfall #13（窗口日期不匹配）\n- Frank 评估后决定暂不深修：\\\"先不修改了，就这样吧，影响不大\\\"\n\n### 记忆系统校准（5/24 cron）\n- USER.md 卡片排序修正：身份信息移至首位（按 skill 规范）\n- MEMORY.md 卡片排序修正：沟通方式提至第2位，路由策略→沟通方式→开发环境→定时任务→Obsidian→OneDrive→萌宠→大模型资源→踩坑集\n- 容量正常：UP 788/1100 (72%)、MEM 1616/1760 (92%)\n\n### 笔记更新\nHenry踩坑集(+#13) · Henry的工作记录(补建条目)\n\n### Git\n`4bc15ce`..HEAD"
-    },
-    {
-      "date": "2026-05-23",
-      "window": "05-22 05:00 → 05-23 04:59",
-      "changes_count": 6,
-      "summary": "## 2026-05-23 · P113事故复盘 + 路由重整 + [I01]全盘规范化 + 技能大修\n\n> 窗口：05-22 05:00 → 05-23 04:59\n\n### P113 吃瓜笔记 + OneDrive同步事故\n- Frank 整理 P113 目录（620文件→14目录+疫情盘点），同步方向搞反 + `rclone delete --include \"*.jpg\"` 误删子目录数百文件\n- **根因**：未 dry-run + 不知道 `--include` 递归 → 🔴铁律：rclone 改前确认+声明方向+等确认+dry-run+再确认+执行\n- Frank 从回收站恢复 → 最终 548文件 1.2GB\n- 写入踩坑集 #12、onedrive-management 技能 CRITICAL RULE、Onedrive记录\n\n### 路由重整\n- **主力**：opencode-go → baidu deepseek-v4-pro（Coding Plan预付费）\n- **fallback链**：opencode-go → deepseek官方 → alibaba kimi-k2.5 → baidu glm-5.1\n- opencode-go 续费为 fallback 第2级\n- 存量bug：不带provider前缀的model切换静默留在当前provider\n\n### 晚间批量工作（按git log时间线）\n- P116美景：9篇笔记(1主+8子)；P121价值创造：5篇(1主+4子)；P122 AI开发：主笔记\n- P113/P114/P115/P116 基于实际文件全面扩写\n- [I01]个人生活总笔记重构：10 Programs全景盘点完成，全盘规范化45篇笔记补全frontmatter+📄卡+关联段\n- 清理脏文件 + 修复5篇旧引用\n\n### 技能体系\n- entity-folder-system 大修：Program待办汇总convention + 模板占位符 + 审查指南\n- 新建 meta-info-writing 技能：元信息笔记v3 card+agent-oriented writing\n- note-review ↔ vault-audit 职责分离\n\n### 今日统计\n- Vault提交：10次 push | 新建/更新笔记：~50篇 | 新建技能：1个（meta-info-writing）| 更新技能：2个（entity-folder-system、onedrive-management）\n\n### Git\n`cbcdaa8`..`4bc15ce` | 10次提交"
     }
   ]
 }
