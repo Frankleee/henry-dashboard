@@ -1,6 +1,12 @@
 {
-  "updated": "2026-07-21 06:35",
+  "updated": "2026-07-22 06:35",
   "entries": [
+    {
+      "date": "2026-07-22",
+      "window": "07-21 05:00 → 07-22 04:59",
+      "changes_count": 2,
+      "summary": "## 2026-07-22 · 静默维护日\n\n> 窗口：07-21 05:00 → 07-22 04:59\n\n### 用户交互\n- 窗口内无用户会话（飞书/PET 均无交互）。距上次活跃飞书会话已 26+ 天。\n\n### 系统自维护\n- ✅ 6:30 cron 正常运行（连续第 2 天）\n- vault 审计、Memory 组装、仪表盘推送\n- 无 provider 故障，无 iLink 限流"
+    },
     {
       "date": "2026-07-21",
       "window": "07-20 05:00 → 07-21 04:59",
@@ -174,12 +180,6 @@
       "window": "05-26 05:00 → 05-27 04:59",
       "changes_count": 3,
       "summary": "## 2026-05-27 · 静默日\n\n> 窗口：05-26 05:00 → 05-27 04:59\n\n### 沉淀与维护\n- 窗口内无用户交互（仅 cron 自运行）\n- Vault 审计：27 项检查通过（A7 Henry踩坑集重复已知；D3 工作记录825行/Obsidian220行超限待拆分）\n- Memory 组装正常：UP 8卡/796c（含价值观+世界观轮换），MEM 11卡/1167c（含版本更新指南+记忆设计轮换）\n- 无孤儿条目（MEMORY.md 全部有📄锚点）\n\n### 状态\n- 路由：opencode-go DSv4pro 主力 + deepseek 官方兜底，2通道简化\n- cron: 1个活跃（f25f3e98fe23 每日沉淀）\n- 无系统变更\n\n### Git\n`364061f`→（待提交）"
-    },
-    {
-      "date": "2026-05-26",
-      "window": "05-25 05:00 → 05-26 04:59",
-      "changes_count": 6,
-      "summary": "## 2026-05-26 · 路由大简化 + Mike 维护\n\n> 窗口：05-25 05:00 → 05-26 04:59\n\n### 路由体系大简化\n- **百度+阿里 Coding Plan 到期不续**。路由从4通道简化为2通道：opencode-go 主力 → deepseek官方兜底\n- 主力：opencode-go deepseek-v4-pro（$10/月套餐）\n- 兜底：deepseek 官方 v4-pro（按量付费）\n- 受影响笔记：路由策略、大模型资源（全面更新）\n\n### Vision 通路确认\n- opencode-go 的 kimi-k2.6/kimi-k2.5/mimo-v2-omni 实测通过 vision\n- 识图首选 kimi-k2.6（最新版）\n\n### Mike Agent 维护\n- 路由同步更新：opencode-go/deepseek-v4-pro 主力\n- OpenClaw 升级：v2026.5.7 → v2026.5.22\n- 停用 3 项 cron（心跳/自进化/记忆维护）— 数据数周无变化，空耗 token\n- 保留 henry-rescue skill\n\n### Hermes 版本调研\n- 检查新版本，之前发现的问题仍未完全解决，暂不升级\n\n### 定时任务卡片修复\n- Henry定时任务.md 卡片 provider 同步：baidu → opencode-go\n\n### Git\n`e816c2a`→`364061f` | 7 次提交（含 live session + 本次 cron）"
     }
   ]
 }
