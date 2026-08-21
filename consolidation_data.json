@@ -1,6 +1,12 @@
 {
-  "updated": "2026-08-21 06:35",
+  "updated": "2026-08-22 06:31",
   "entries": [
+    {
+      "date": "2026-08-22",
+      "window": "08-21 05:00 → 08-22 04:59",
+      "changes_count": 2,
+      "summary": "## 2026-08-22 · 静默日\n\n> 窗口：08-21 05:00 → 08-22 04:59\n\n### 用户交互\n- 无。过去 26 小时内无飞书/微信会话。\n\n### 系统自维护\n- 6:30 cron 正常运行\n- 主力路由 opencode-go v4-flash 稳定；飞书 WebSocket 断连持续未生效（待网关重启）\n\n---"
+    },
     {
       "date": "2026-08-21",
       "window": "08-20 05:00 → 08-21 04:59",
@@ -174,12 +180,6 @@
       "window": "07-23 05:00 → 07-24 04:59",
       "changes_count": 5,
       "summary": "## 2026-07-24 · Hermes v0.19.0 升级\n\n> 窗口：07-23 05:00 → 07-24 04:59\n\n### 用户交互\n- **飞书会话**（07-23 07:08）：Frank 询问 Hermes 版本更新情况 → Henry 分析 v0.16-v0.19 四大版本（落后 678 commits）→ Frank 让 Mike 执行 `hermes update` 升级到 v0.19.0\n\n### Hermes 升级：v0.15.1 → v0.19.0\n- **执行人**：Mike（交叉更新协议）\n- **升级路径**：`hermes update`（Git pull + 自动迁移）\n- **Config 迁移**：v23 → v33，自动完成，无报错\n- **Cron 状态**：3 个 cron 全部完好（沉淀/资讯简报/播客轮换）\n- **Provider**：opencode-go deepseek-v4-pro 未变，fallback 链完整\n- **错误日志**：无新增 ERROR\n\n### 遗留问题\n- ⚠️ **Gateway 需要重启**：`hermes gateway status` 报告 \"stale service definition\" — launchd 仍跑旧版 plist。需 Frank 手动 `hermes gateway restart`（重启会断当前飞书会话，不能由 cron 自动执行）\n\n### v0.19.0 核心特性\n- 冷启动 80% 加速（~4.3s → ~0.9s）\n- 推理模型实时流式输出\n- 智能审批（LLM 自动判断命令风险）\n- 交付账本（网关崩溃不丢回复）\n- 子代理实时监控\n- 14× 更快桌面端 Markdown 渲染\n\n### 系统自维护\n- ✅ 6:30 cron 正常运行（连续第 4 天）"
-    },
-    {
-      "date": "2026-07-23",
-      "window": "07-22 05:00 → 07-23 04:59",
-      "changes_count": 2,
-      "summary": "## 2026-07-23 · 静默维护日\n\n> 窗口：07-22 05:00 → 07-23 04:59\n\n### 用户交互\n- 窗口内无用户会话（飞书/PET 均无交互）。距上次活跃飞书会话已 27+ 天。\n\n### 系统自维护\n- ✅ 6:30 cron 正常运行（连续第 3 天）\n- vault 审计、Memory 组装（UP 8卡/788c, MEM 16卡/1674c）、仪表盘推送\n- 无 provider 故障，无 iLink 限流\n- D3⚠️：工作记录(1374行)、Obsidian记录(358行)、Onedrive记录(275行) 均超阈值待拆分"
     }
   ]
 }
