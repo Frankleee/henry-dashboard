@@ -1,6 +1,12 @@
 {
-  "updated": "2026-09-07 06:32",
+  "updated": "2026-09-28 06:34",
   "entries": [
+    {
+      "date": "2026-09-28",
+      "window": "09-27 05:00 → 09-28 04:59",
+      "changes_count": 0,
+      "summary": "## 2026-09-28 · ⚠️ 沉淀阻塞（Vault TCC 读取被拒）\n\n> 窗口：09-27 05:00 → 09-28 04:59\n\n### 状态：cron 运行但失败\n- ❌ 步骤 2-7 全部阻塞：`~/Documents` 读取被 macOS TCC 拒绝（`kTCCServiceSystemPolicyDocumentsFolder`）\n- 内核日志实证：`(Sandbox) watchdog expired for approval entry (… SystemPolicyDocumentsFolder, pid …)`，后台进程永远弹不出授权窗\n- 特征：`stat` 目录成功、`ls`/`cat` 立即返回 `Interrupted system call`；`~/Desktop` 同样失败 → 判定为 TCC 拒绝，非 APFS I/O 锁定\n- 写入/改名不受阻：`~/.hermes/memories/`、`~/code/henry-dashboard` 读写正常（本条目即由此写出）\n\n### 影响面\n- 工作记录 / Obsidian记录 / OneDrive记录 / 记忆文件 / 用量统计 全部无法更新\n- Obsidian vault git 远端停在 2026-09-07，已连续 21 天无提交（09-08 起）\n- 仪表盘、沉淀报告数据停在 09-07\n- 待补笔记：Henry路由策略、Henry的大模型资源，以及 09-08 → 09-28 全部工作记录条目\n\n### 恢复路径（需 Frank 在 GUI 操作，agent 无法自助）\n1. 系统设置 → 隐私与安全性 → 完全磁盘访问权限 → 添加 `/Users/franklee/.hermes/hermes-agent/venv/bin/python`\n2. `launchctl kickstart -k gui/$(id -u)/ai.hermes.gateway`\n3. 免授权替代：退出 Obsidian（防 Sync 误判删除）、`mv` vault 到 `~/ObsidianVault` + 原路径符号链接，脚本 `~/.hermes/scripts/vault_migrate.command` 已备\n\n### 备注\n- Obsidian 桌面端仍在运行（`--background`），Sync 未断，本地 vault 内容本身完好，仅 Henry 读取通道被拒"
+    },
     {
       "date": "2026-09-07",
       "window": "09-06 05:00 → 09-07 04:59",
@@ -174,12 +180,6 @@
       "window": "08-09 05:00 → 08-10 04:59",
       "changes_count": 2,
       "summary": "## 2026-08-10 · 静默日\n\n> 窗口：08-09 05:00 → 08-10 04:59\n\n### 用户交互\n- 无。过去 25 小时内无飞书/微信会话。\n\n### 系统自维护\n- ✅ 6:30 cron 正常运行（连续第 21 天）\n- ⚠️ 工作记录 1621 行已超 500 行阈值，需手动拆分"
-    },
-    {
-      "date": "2026-08-09",
-      "window": "08-08 05:00 → 08-09 04:59",
-      "changes_count": 2,
-      "summary": "## 2026-08-09 · 静默日\n\n> 窗口：08-08 05:00 → 08-09 04:59\n\n### 用户交互\n- 无。过去 26 小时内无飞书/微信会话。\n\n### 系统自维护\n- ✅ 6:30 cron 正常运行（连续第 20 天）\n- ⚠️ 工作记录已超 500 行阈值，需手动拆分"
     }
   ]
 }
